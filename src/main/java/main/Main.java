@@ -4,13 +4,9 @@ import java.io.IOException;
 
 import org.tsaap.questions.Answer;
 import org.tsaap.questions.Question;
-import org.tsaap.questions.Quiz;
-import org.tsaap.questions.QuizContentHandler;
 import org.tsaap.questions.TextBlock;
-import org.tsaap.questions.impl.DefaultQuestion;
 import org.tsaap.questions.impl.DefaultQuiz;
 import org.tsaap.questions.impl.gift.GiftQuestionService;
-import org.tsaap.questions.impl.gift.GiftQuizContentHandler;
 import org.tsaap.questions.impl.gift.GiftReaderException;
 
 public class Main {
