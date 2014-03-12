@@ -50,6 +50,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      * Receive notification of the end of a quiz
      */
     public void onEndQuiz() {
+    	System.out.println("Fin reception quizz");
     }
 
     /**
@@ -160,7 +161,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         String trimedStr = str.trim();
         if (currentTitle != null) {
             currentTitle.append(trimedStr);
-            logger.debug("currentTitle | " + currentTitle.toString());
+            //logger.debug("currentTitle | " + currentTitle.toString());
         } else if (answerCreditIsBeenBuilt) {
             currentAnswer.setPercentCredit(new Float(trimedStr));
         } else if (feedbackIsBeenBuilt) {
@@ -168,7 +169,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         } else if (currentAnswer != null) {
             currentAnswer.setTextValue(trimedStr);
         } else if (currentQuestion != null && currentAnswerBlock == null) {
-            logger.debug("Text fragment | " + str);
+            //logger.debug("Text fragment | " + str);
             currentQuestion.addTextBlock(new TextBlock() {
                 public String getText() {
                     return str;
@@ -179,10 +180,10 @@ public class GiftQuizContentHandler implements QuizContentHandler {
 
 
     private void postProcess(Question question) {
-       logger.debug("Post processing of the current question");
+       //logger.debug("Post processing of the current question");
     }
 
-    private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
+    //private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
 
     private DefaultQuiz quiz;
     private DefaultQuestion currentQuestion;

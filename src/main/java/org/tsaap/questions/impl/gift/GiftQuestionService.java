@@ -119,5 +119,4 @@ public class GiftQuestionService {
         }
         return noResponseAnswer;
     }
-
 }
