@@ -12,7 +12,7 @@ import java.io.Reader;
  */
 public class GiftReader implements QuizReader {
 
-    private static Logger logger = Logger.getLogger(GiftReader.class);
+    //private static Logger logger = Logger.getLogger(GiftReader.class);
 
     public void parse(Reader reader) throws IOException, GiftReaderException {
         int currentChar;
@@ -38,11 +38,11 @@ public class GiftReader implements QuizReader {
             } else {
                 processAnyCharacter(currentChar);
             }
-            logger.debug("Current char  | " + (char) currentChar);
+            //logger.debug("Current char  | " + (char) currentChar);
             if (accumulator != null) {
-                logger.debug("Accumulator | " + accumulator.toString());
+                //logger.debug("Accumulator | " + accumulator.toString());
             }
-            logger.debug("control caracter accumulator | " + (char) controlCharAccumulator);
+            //logger.debug("control caracter accumulator | " + (char) controlCharAccumulator);
         }
         endQuiz();
         quizContentHandler.onEndQuiz();
