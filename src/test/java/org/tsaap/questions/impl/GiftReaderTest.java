@@ -21,7 +21,7 @@ public class GiftReaderTest {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
-		fail("Not yet implemented");	
+		//fail("Not yet implemented");	
 	}
 
 }
