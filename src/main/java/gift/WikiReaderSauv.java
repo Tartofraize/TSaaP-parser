@@ -103,10 +103,8 @@ public class WikiReaderSauv implements QuizReader {
         if (controlCharAccumulator == ':') {
             if (titleHasStarted) {
                 titleHasEnded = true;
-                //quizContentHandler.onEndTitle();
             } else {
                 titleHasStarted = true;
-                //quizContentHandler.onStartTitle();
             }
             controlCharAccumulator = -1;
         }
