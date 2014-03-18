@@ -9,7 +9,7 @@ import quizz.interfaces.QuizReader;
 /**
  * @author franck Silvestre
  */
-public class GiftReader implements QuizReader {
+public class WikiReader implements QuizReader {
 
     //private static Logger logger = Logger.getLogger(GiftReader.class);
 
