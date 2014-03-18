@@ -29,6 +29,15 @@ import org.tsaap.questions.impl.*;
 public class GiftQuizContentHandler implements QuizContentHandler {
 
 
+    private DefaultQuiz quiz;
+    private DefaultQuestion currentQuestion;
+    private DefaultAnswerBlock currentAnswerBlock;
+    private DefaultAnswer currentAnswer;
+    private StringBuffer currentTitle;
+    private boolean answerCreditIsBeenBuilt;
+    private boolean feedbackIsBeenBuilt;
+    private int answerCounter ;
+
     /**
      * Get the quiz
      *
@@ -184,13 +193,4 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     }
 
     //private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
-
-    private DefaultQuiz quiz;
-    private DefaultQuestion currentQuestion;
-    private DefaultAnswerBlock currentAnswerBlock;
-    private DefaultAnswer currentAnswer;
-    private StringBuffer currentTitle;
-    private boolean answerCreditIsBeenBuilt;
-    private boolean feedbackIsBeenBuilt;
-    private int answerCounter ;
 }

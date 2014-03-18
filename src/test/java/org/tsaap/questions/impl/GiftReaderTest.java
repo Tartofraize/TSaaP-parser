@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.tsaap.questions.impl.gift.GiftQuestionService;
 import org.tsaap.questions.impl.gift.GiftReaderException;
+import org.tsaap.questions.impl.gift.GiftReaderQuestionWithInvalidFormatException;
 
 public class GiftReaderTest {
 

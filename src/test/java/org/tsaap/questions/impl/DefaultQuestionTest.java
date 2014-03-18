@@ -14,9 +14,15 @@ import org.tsaap.questions.TextBlock;
 
 public class DefaultQuestionTest {
 	
-	DefaultQuestion df = new DefaultQuestion();
-    QuestionType questionType = QuestionType.TrueFalse;
+	DefaultQuestion df;
+    QuestionType questionType;
 
+    @Before
+    public void setUp() {
+    	df = new DefaultQuestion();
+    	questionType = QuestionType.TrueFalse;
+    }
+    
 	@Test
 	public void testGetTitle() {
 		df.getTitle();
