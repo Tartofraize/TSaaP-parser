@@ -1,12 +1,12 @@
 package org.tsaap.questions.impl;
 
 import static org.junit.Assert.*;
+import gift.GiftQuestionService;
+import gift.GiftReaderException;
 
 import java.io.IOException;
 
 import org.junit.Test;
-import org.tsaap.questions.impl.gift.GiftQuestionService;
-import org.tsaap.questions.impl.gift.GiftReaderException;
 
 public class GiftReaderTest {
 

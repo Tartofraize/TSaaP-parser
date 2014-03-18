@@ -1,13 +1,16 @@
 package main;
 
+import gift.GiftQuestionService;
+import gift.GiftReaderException;
+
 import java.io.IOException;
 
-import org.tsaap.questions.Answer;
-import org.tsaap.questions.Question;
-import org.tsaap.questions.TextBlock;
-import org.tsaap.questions.impl.DefaultQuiz;
-import org.tsaap.questions.impl.gift.GiftQuestionService;
-import org.tsaap.questions.impl.gift.GiftReaderException;
+import questions.interfaces.Question;
+import questions.interfaces.TextBlock;
+import quizz.implementation.QuizImpl;
+import reponses.interfaces.Answer;
+
+
 
 public class Main {
 
@@ -17,7 +20,7 @@ public class Main {
 		GiftQuestionService me = new GiftQuestionService();
 		
 		try {
-			DefaultQuiz test = (DefaultQuiz) me.getQuizFromGiftText("::Grant's tomb ::Qui repose dans la Grant's tomb à New-York? {=Grant~Personne#C'était vrai pendant 12 ans, mais la dépouille de Grant a été enterrée dans cette tombe en 1897.~Napoléon#Il a été enterré en France.~Churchill#Il a été enterré en Angleterre.~Mère Teresa#Elle a été enterrée en Inde.}");
+			QuizImpl test = (QuizImpl) me.getQuizFromGiftText("::Grant's tomb ::Qui repose dans la Grant's tomb à New-York? {=Grant~Personne#C'était vrai pendant 12 ans, mais la dépouille de Grant a été enterrée dans cette tombe en 1897.~Napoléon#Il a été enterré en France.~Churchill#Il a été enterré en Angleterre.~Mère Teresa#Elle a été enterrée en Inde.}");
 			for (Question question : test.getQuestionList()) {
 				System.out.println(question.getTitle());
 				for (TextBlock txt : question.getTextBlockList()) {

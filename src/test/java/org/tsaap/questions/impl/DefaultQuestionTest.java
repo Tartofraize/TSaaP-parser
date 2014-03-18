@@ -1,20 +1,19 @@
 package org.tsaap.questions.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.tsaap.questions.AnswerBlock;
-import org.tsaap.questions.QuestionBlock;
-import org.tsaap.questions.QuestionType;
-import org.tsaap.questions.TextBlock;
+
+import questions.implementation.QuestionImpl;
+import questions.interfaces.QuestionType;
+import questions.interfaces.TextBlock;
+import reponses.implementation.AnswerBlockImpl;
+import reponses.interfaces.AnswerBlock;
 
 public class DefaultQuestionTest {
 	
-	DefaultQuestion df = new DefaultQuestion();
+	QuestionImpl df = new QuestionImpl();
     QuestionType questionType = QuestionType.TrueFalse;
 
 	@Test
@@ -49,7 +48,7 @@ public class DefaultQuestionTest {
 
 	@Test
 	public void testAddAnswerBlock() {
-		AnswerBlock answer = new DefaultAnswerBlock();
+		AnswerBlock answer = new AnswerBlockImpl();
 		df.addAnswerBlock(answer);
 		assertEquals(1, df.getBlockList().size());
 		assertEquals(1, df.getAnswerBlockList().size());
