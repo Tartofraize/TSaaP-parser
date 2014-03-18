@@ -1,24 +1,15 @@
 package gift;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-
-import questions.interfaces.QuestionType;
 import quizz.interfaces.QuizContentHandler;
 import quizz.interfaces.QuizReader;
 
 /**
  * @author franck Silvestre
  */
-public class WikiReader implements QuizReader {
+public class WikiReaderSauv implements QuizReader {
 
     private QuizContentHandler quizContentHandler;
     private StringBuffer accumulator;
@@ -27,6 +18,8 @@ public class WikiReader implements QuizReader {
 
     private boolean questionHasStarted;
     private boolean questionHasEnded;
+    private boolean titleHasStarted;
+    private boolean titleHasEnded;
     private boolean answerFragmentHasStarted;
     private boolean answerFragmentHasEnded;
     private boolean answerHasStarted;
@@ -35,82 +28,44 @@ public class WikiReader implements QuizReader {
     private boolean answerCreditHasEnded;
     //private static Logger logger = Logger.getLogger(GiftReader.class);
 
-    public void readFichier(String fichier) {
-    	// lecture du fichier contenant le quizz	
-		try {
-			File fXmlFile = new File(fichier);
-			
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
-			doc.getDocumentElement().normalize();
-
-			// récupère le contenu
-			String contentFich = doc.getDocumentElement().getTextContent();
-			
-			StringReader reader = new StringReader(contentFich);
-	        parse(reader);	
-		} catch (Exception e){
-			System.out.println(e.toString());
-		}  	
-    }
-    
     public void parse(Reader reader) throws IOException, GiftReaderException {
-        // lancement du quizz
-    	quizContentHandler.onStartQuiz();
-    	
         int currentChar;
+        quizContentHandler.onStartQuiz();
         while ((currentChar = reader.read()) != -1) {
-        	System.out.println("debDUneBoucle");
-        	// recupere la question
-        	String questionADecouper = betweenTwoChar(reader, '{', '}');
-        	// début de la question
-        	quizContentHandler.onStartQuestion();
-        	// découpe la question
-        	decoupeQuestion(questionADecouper);
-        	// fin de la question
-        	quizContentHandler.onEndQuestion();
-        	// recupere les reponses
-        	System.out.println("finDUneBoucle");
+            checkQuestionHasStarted();
+            switch (currentChar) {
+            	case ':':
+            		processColonCharacter();
+            		break;
+            	case '\\':
+            		processAntiSlashCharacter();
+            		break;
+            	case '{':
+            		processLeftBracketCharacter();
+            		break;
+            	case '}':
+            		processRightBracketCharacter();
+            		break;
+            	case '=':
+            		processEqualCharacter();
+            		break;
+            	case '~':
+            		processTildeCharacter();
+            		break;
+            	case '#':
+            		processSharpCharacter();
+            		break;
+            	case '%':
+            		processPercentCharacter();
+            		break;
+            	default :
+            		processAnyCharacter(currentChar);
+            		break;
+            }
         }
-        
         endQuiz();
         quizContentHandler.onEndQuiz();
-    }
-    
-    /**
-     * Récupère le contenu d'un fichier se situant entre deux caractères donnés
-     * @param bf, le fichier à parser
-     * @param start, le caractère de départ
-     * @param finish, le caractère de fin
-     * @return la string contenu entre les 2 caractères
-     */
-    public String betweenTwoChar(Reader bf, char start, char finish) {
-    	String questionADecouper = "";
-    	int charCurrent;
-    	try {
-    		// on cherche le premier caractère
-			while(bf.read() != start);
-			// quand on l'a trouvé, on concatène la chaine résultat
-			while((charCurrent = bf.read()) != finish) {
-	    		questionADecouper += (char) charCurrent;
-	    	}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}   
-		return questionADecouper;
-    }
-    
-    /**
-     * Découpe une chaine afin de récupérer le nom de la question ainsi que son type
-     * @param questionADecouper, la chaine à analyser et à découper
-     */
-    public void decoupeQuestion(String questionADecouper) {  	
-    	questionADecouper = questionADecouper.replaceAll("\n", "");
-    	String[] decoupe = questionADecouper.split("\\|");
-    	String nomDeLaQuestion = decoupe[0];    	
-    	char typeDelaQuestion = decoupe[1].charAt(6);
-    	quizContentHandler.onModifQuestion(nomDeLaQuestion, typeDelaQuestion);
+
     }
 
     private void checkQuestionHasStarted() {
@@ -128,6 +83,32 @@ public class WikiReader implements QuizReader {
             flushAccumulator();
             questionHasEnded = true;
             quizContentHandler.onEndQuestion();
+        }
+
+    }
+
+    private void processColonCharacter() throws GiftReaderNotEscapedCharacterException {
+        if (escapeMode) {
+            processAnyCharacter(':');
+            return;
+        }
+        if (titleHasEnded) {
+            throw new GiftReaderNotEscapedCharacterException();
+        }
+        if (controlCharAccumulator == -1) {
+            flushAccumulator();
+            controlCharAccumulator = ':';
+            return;
+        }
+        if (controlCharAccumulator == ':') {
+            if (titleHasStarted) {
+                titleHasEnded = true;
+                //quizContentHandler.onEndTitle();
+            } else {
+                titleHasStarted = true;
+                //quizContentHandler.onStartTitle();
+            }
+            controlCharAccumulator = -1;
         }
 
     }

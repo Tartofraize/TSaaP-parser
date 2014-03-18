@@ -1,0 +1,9 @@
+<quiz>
+{Question
+|type="[]"}
++ Correct answer.
+- Incorrect answer.
++ Correct answer.
+- Incorrect answer.
+
+</quiz>

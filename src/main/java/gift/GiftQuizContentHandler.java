@@ -30,6 +30,14 @@ import reponses.implementation.AnswerImpl;
  */
 public class GiftQuizContentHandler implements QuizContentHandler {
 
+    private QuizImpl quiz;
+    private QuestionImpl currentQuestion;
+    private AnswerBlockImpl currentAnswerBlock;
+    private AnswerImpl currentAnswer;
+    //private StringBuffer currentTitle;
+    private boolean answerCreditIsBeenBuilt;
+    private boolean feedbackIsBeenBuilt;
+    private int answerCounter ;
 
     /**
      * Get the quiz
@@ -46,6 +54,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      */
     public void onStartQuiz() {
         quiz = new QuizImpl();
+        System.out.println("Debut du Quizz");
     }
 
     /**
@@ -60,7 +69,25 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      */
     public void onStartQuestion() {
         currentQuestion = new QuestionImpl();
-        currentQuestion.setQuestionType(QuestionType.MultipleChoice);
+        //currentQuestion.setQuestionType(QuestionType.MultipleChoice);
+    }
+    
+    /**
+     * Receive notification of the beginning of a question
+     */
+    public void onModifQuestion(final String nomDeLaQuestion, char typeDelaQuestion) {
+    	currentQuestion.addTextBlock(new TextBlock() {
+            public String getText() {
+                return nomDeLaQuestion;
+            }
+        });
+    	System.out.println(currentQuestion.getTextBlockList().get(0).getText());
+        if (typeDelaQuestion == '[') {
+        	currentQuestion.setQuestionType(QuestionType.MultipleChoice);
+        } else if (typeDelaQuestion == '(') {
+        	currentQuestion.setQuestionType(QuestionType.ExclusiveChoice);
+        }
+        System.out.println(currentQuestion.getQuestionType());
     }
 
     /**
@@ -76,17 +103,17 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     /**
      * Receive notification of the beginning of a title
      */
-    public void onStartTitle() {
-        currentTitle = new StringBuffer();
-    }
+    //public void onStartTitle() {
+        //currentTitle = new StringBuffer();
+    //}
 
     /**
      * Receive notification of the end of a title
      */
-    public void onEndTitle() {
-        currentQuestion.setTitle(currentTitle.toString());
-        currentTitle = null;
-    }
+    //public void onEndTitle() {
+        //currentQuestion.setTitle(currentTitle.toString());
+        //currentTitle = null;
+    //}
 
     /**
      * Receive notification of the beginning of an answer fragment
@@ -161,10 +188,11 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      */
     public void onString(final String str) {
         String trimedStr = str.trim();
-        if (currentTitle != null) {
-            currentTitle.append(trimedStr);
+        //if (currentTitle != null) {
+            //currentTitle.append(trimedStr);
             //logger.debug("currentTitle | " + currentTitle.toString());
-        } else if (answerCreditIsBeenBuilt) {
+        //} else 
+        	if (answerCreditIsBeenBuilt) {
             currentAnswer.setPercentCredit(new Float(trimedStr));
         } else if (feedbackIsBeenBuilt) {
             currentAnswer.setFeedback(trimedStr);
@@ -186,13 +214,4 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     }
 
     //private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
-
-    private QuizImpl quiz;
-    private QuestionImpl currentQuestion;
-    private AnswerBlockImpl currentAnswerBlock;
-    private AnswerImpl currentAnswer;
-    private StringBuffer currentTitle;
-    private boolean answerCreditIsBeenBuilt;
-    private boolean feedbackIsBeenBuilt;
-    private int answerCounter ;
 }

@@ -88,10 +88,10 @@ public class GiftReader implements QuizReader {
         if (controlCharAccumulator == ':') {
             if (titleHasStarted) {
                 titleHasEnded = true;
-                quizContentHandler.onEndTitle();
+                //quizContentHandler.onEndTitle();
             } else {
                 titleHasStarted = true;
-                quizContentHandler.onStartTitle();
+                //quizContentHandler.onStartTitle();
             }
             controlCharAccumulator = -1;
         }

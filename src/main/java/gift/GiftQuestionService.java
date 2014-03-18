@@ -55,6 +55,20 @@ public class GiftQuestionService {
         quizReader.parse(reader);
         return handler.getQuiz();
     }
+    
+    /**
+     * Get quiz from its gift text specification
+     *
+     * @param giftText the gift text
+     * @return the result quiz
+     */
+    public Quiz getQuizFromWikiText(String giftText) throws IOException, GiftReaderException {
+        GiftQuizContentHandler handler = new GiftQuizContentHandler();
+        WikiReader quizReader = new WikiReader();
+        quizReader.setQuizContentHandler(handler);
+        quizReader.readFichier(giftText);
+        return handler.getQuiz();
+    }
 
     private AnswerImpl noResponseAnswer;
 
