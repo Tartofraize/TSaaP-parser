@@ -6,8 +6,10 @@ import gift.GiftReaderException;
 import gift.WikiReader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.net.URL;
 
 import questions.implementation.QuestionImpl;
 import questions.interfaces.Question;
@@ -22,11 +24,15 @@ import reponses.interfaces.AnswerBlock;
 
 public class MainWiki {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL input = classLoader.getResource("main/TestQuizz.txt");
 		GiftQuizContentHandler handler = new GiftQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);
-        quizReader.readFichier("C:\\Users\\user\\git\\TSaaP-parser\\src\\main\\java\\main\\TestQuizz.txt");
+        quizReader.readFichier(input);
+        
+        
 //		GiftQuestionService me = new GiftQuestionService();
 //		
 //		try {

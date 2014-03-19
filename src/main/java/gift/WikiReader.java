@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,10 +36,31 @@ public class WikiReader implements QuizReader {
     private boolean answerCreditHasEnded;
     //private static Logger logger = Logger.getLogger(GiftReader.class);
 
-    public void readFichier(String fichier) {
+    public void readFichier(String input) {
     	// lecture du fichier contenant le quizz	
 		try {
-			File fXmlFile = new File(fichier);
+			File fXmlFile = new File(input);
+			
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+			doc.getDocumentElement().normalize();
+
+			// récupère le contenu
+			String contentFich = doc.getDocumentElement().getTextContent();
+			
+			StringReader reader = new StringReader(contentFich);
+	        parse(reader);	
+		} catch (Exception e){
+			System.out.println(e.toString());
+		}  	
+    }
+    
+    
+    public void readFichier(URL input) {
+    	// lecture du fichier contenant le quizz	
+		try {
+			File fXmlFile = new File(input.getFile());
 			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
