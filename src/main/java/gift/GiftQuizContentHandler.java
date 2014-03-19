@@ -16,6 +16,8 @@
 
 package gift;
 
+import org.apache.log4j.Logger;
+
 import questions.implementation.QuestionImpl;
 import questions.interfaces.Question;
 import questions.interfaces.QuestionType;
@@ -34,7 +36,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     private QuestionImpl currentQuestion;
     private AnswerBlockImpl currentAnswerBlock;
     private AnswerImpl currentAnswer;
-    //private StringBuffer currentTitle;
+    private StringBuffer currentTitle;
     private boolean answerCreditIsBeenBuilt;
     private boolean feedbackIsBeenBuilt;
     private int answerCounter ;
@@ -69,7 +71,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      */
     public void onStartQuestion() {
         currentQuestion = new QuestionImpl();
-        //currentQuestion.setQuestionType(QuestionType.MultipleChoice);
+        currentQuestion.setQuestionType(QuestionType.MultipleChoice);
     }
     
     /**
@@ -103,17 +105,17 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     /**
      * Receive notification of the beginning of a title
      */
-    //public void onStartTitle() {
-        //currentTitle = new StringBuffer();
-    //}
+    public void onStartTitle() {
+        currentTitle = new StringBuffer();
+    }
 
     /**
      * Receive notification of the end of a title
      */
-    //public void onEndTitle() {
-        //currentQuestion.setTitle(currentTitle.toString());
-        //currentTitle = null;
-    //}
+    public void onEndTitle() {
+        currentQuestion.setTitle(currentTitle.toString());
+        currentTitle = null;
+    }
 
     /**
      * Receive notification of the beginning of an answer fragment
@@ -188,10 +190,10 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      */
     public void onString(final String str) {
         String trimedStr = str.trim();
-        //if (currentTitle != null) {
-            //currentTitle.append(trimedStr);
-            //logger.debug("currentTitle | " + currentTitle.toString());
-        //} else 
+        if (currentTitle != null) {
+            currentTitle.append(trimedStr);
+            logger.debug("currentTitle | " + currentTitle.toString());
+        } else 
         	if (answerCreditIsBeenBuilt) {
             currentAnswer.setPercentCredit(new Float(trimedStr));
         } else if (feedbackIsBeenBuilt) {
@@ -199,7 +201,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         } else if (currentAnswer != null) {
             currentAnswer.setTextValue(trimedStr);
         } else if (currentQuestion != null && currentAnswerBlock == null) {
-            //logger.debug("Text fragment | " + str);
+            logger.debug("Text fragment | " + str);
             currentQuestion.addTextBlock(new TextBlock() {
                 public String getText() {
                     return str;
@@ -210,8 +212,8 @@ public class GiftQuizContentHandler implements QuizContentHandler {
 
 
     private void postProcess(Question question) {
-       //logger.debug("Post processing of the current question");
+       logger.debug("Post processing of the current question");
     }
 
-    //private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
+    private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
 }

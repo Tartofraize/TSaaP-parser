@@ -34,12 +34,12 @@ public interface QuizContentHandler {
     /**
      * Receive notification of the beginning of a title
      */
-    //public void onStartTitle();
+    public void onStartTitle();
 
     /**
      * Receive notification of the end of a title
      */
-    //public void onEndTitle();
+    public void onEndTitle();
 
     /**
      * Receive notification of the beginning of an answer block

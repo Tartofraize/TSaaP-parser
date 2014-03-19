@@ -3,6 +3,8 @@ package gift;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.apache.log4j.Logger;
+
 import quizz.interfaces.QuizContentHandler;
 import quizz.interfaces.QuizReader;
 
@@ -11,7 +13,7 @@ import quizz.interfaces.QuizReader;
  */
 public class GiftReader implements QuizReader {
 
-    //private static Logger logger = Logger.getLogger(GiftReader.class);
+    private static Logger logger = Logger.getLogger(GiftReader.class);
 
     public void parse(Reader reader) throws IOException, GiftReaderException {
         int currentChar;
@@ -47,6 +49,11 @@ public class GiftReader implements QuizReader {
             		processAnyCharacter(currentChar);
             		break;
             }
+            logger.debug("Current char  | " + (char) currentChar);
+            if (accumulator != null) {
+            	logger.debug("Accumulator | " + accumulator.toString());
+            }
+            logger.debug("control caracter accumulator | " + (char) controlCharAccumulator);
         }
         endQuiz();
         quizContentHandler.onEndQuiz();
@@ -88,10 +95,10 @@ public class GiftReader implements QuizReader {
         if (controlCharAccumulator == ':') {
             if (titleHasStarted) {
                 titleHasEnded = true;
-                //quizContentHandler.onEndTitle();
+                quizContentHandler.onEndTitle();
             } else {
                 titleHasStarted = true;
-                //quizContentHandler.onStartTitle();
+                quizContentHandler.onStartTitle();
             }
             controlCharAccumulator = -1;
         }
