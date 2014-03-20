@@ -1,22 +1,7 @@
 package main;
 
-import gift.GiftQuestionService;
 import gift.GiftQuizContentHandler;
-import gift.GiftReaderException;
 import gift.WikiReader;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-
-import questions.implementation.QuestionImpl;
-import questions.interfaces.Question;
-import questions.interfaces.QuestionBlock;
-import questions.interfaces.TextBlock;
-import quizz.implementation.QuizImpl;
-import quizz.interfaces.Quiz;
-import reponses.interfaces.Answer;
-import reponses.interfaces.AnswerBlock;
 
 
 

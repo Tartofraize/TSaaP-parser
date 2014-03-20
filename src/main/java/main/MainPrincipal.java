@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.management.PlatformManagedObject;
 import java.net.URL;
 
 import questions.interfaces.Question;
@@ -22,15 +23,16 @@ public class MainPrincipal {
 
 	public static void main(String[] args) {
 		// TODO Stub de la méthode généré automatiquement
-		String quizz;
+		//String quizz;
 		String filePath = new File("ressources/TestQuizz.txt").getAbsolutePath();
-		System.out.println(filePath);
 		
+		//quizz = recuperationQuestion(filePath);
+
 		GiftQuizContentHandler handler = new GiftQuizContentHandler();
-        WikiReader quizReader = new WikiReader();
-        quizReader.setQuizContentHandler(handler);
-        quizReader.readFichier(filePath);
-        
+		WikiReader quizReader = new WikiReader();
+		quizReader.setQuizContentHandler(handler);
+		quizReader.readFichier(filePath);
+
         
 		
 		
@@ -61,7 +63,7 @@ public class MainPrincipal {
 	private static String recuperationQuestion(String filePath) {
 		String question = new String();
 		
-		try{
+		try {
 			BufferedReader buff = new BufferedReader(new FileReader(filePath));	
 			
 			try {
