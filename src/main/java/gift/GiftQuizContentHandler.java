@@ -70,7 +70,6 @@ public class GiftQuizContentHandler implements QuizContentHandler {
      */
     public void onStartQuestion() {
         currentQuestion = new QuestionImpl();
-        currentQuestion.setQuestionType(QuestionType.MultipleChoice);
     }
     
     /**
@@ -82,13 +81,11 @@ public class GiftQuizContentHandler implements QuizContentHandler {
                 return nomDeLaQuestion;
             }
         });
-    	System.out.println("Nom : "+currentQuestion.getTextBlockList().get(0).getText());
         if (typeDelaQuestion == '[') {
         	currentQuestion.setQuestionType(QuestionType.MultipleChoice);
         } else if (typeDelaQuestion == '(') {
         	currentQuestion.setQuestionType(QuestionType.ExclusiveChoice);
         }
-        System.out.println("Type : "+currentQuestion.getQuestionType());
     }
 
     /**
@@ -160,17 +157,13 @@ public class GiftQuizContentHandler implements QuizContentHandler {
             currentAnswer.setPercentCredit(100f);
         } else {
             currentAnswer.setPercentCredit(0f);
-        }
-        
-        //System.out.println("ID Answer: "+ currentAnswer.getIdentifier() +" Value : "+currentAnswer.getTextValue() + " Float : " + currentAnswer.getPercentCredit());
+        }        
     }
 
     /**
      * Receive notification of the end of an answer
      */
     public void onEndAnswer() {
-        System.out.println("ID Answer: "+ currentAnswer.getIdentifier() +" Value : "+currentAnswer.getTextValue() + " Float : " + currentAnswer.getPercentCredit());
-
         currentAnswerBlock.addAnswer(currentAnswer);
         currentAnswer = null;
     }

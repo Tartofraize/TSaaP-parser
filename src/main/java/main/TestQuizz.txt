@@ -6,11 +6,10 @@
 + Correct answer.
 - Incorrect answer.
 
-{Question2
+{Question
 |type="[]"}
 + Correct answer.
 - Incorrect answer.
 + Correct answer.
 - Incorrect answer.
-
 </quiz>

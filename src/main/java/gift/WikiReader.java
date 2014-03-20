@@ -22,19 +22,6 @@ import quizz.interfaces.QuizReader;
 public class WikiReader implements QuizReader {
 
     private QuizContentHandler quizContentHandler;
-    private StringBuffer accumulator;
-    private int controlCharAccumulator = -1;
-    private boolean escapeMode;
-
-    private boolean questionHasStarted;
-    private boolean questionHasEnded;
-    private boolean answerFragmentHasStarted;
-    private boolean answerFragmentHasEnded;
-    private boolean answerHasStarted;
-    private boolean answerFeedbackHasStarted;
-    private boolean answerCreditHasStarted;
-    private boolean answerCreditHasEnded;
-    //private static Logger logger = Logger.getLogger(GiftReader.class);
 
     public void readFichier(String input) {
     	// lecture du fichier contenant le quizz	
@@ -48,9 +35,15 @@ public class WikiReader implements QuizReader {
 
 			// récupère le contenu
 			String contentFich = doc.getDocumentElement().getTextContent();
-			System.out.println(contentFich);
 			StringReader reader = new StringReader(contentFich);
-	        parse(reader);	
+			
+			StringReader readerVerif = new StringReader(contentFich);
+			// on vérifie que le quizz est composé d'au moins une question
+	        if (containsLeastOneQuestion(readerVerif)) {
+	        	parse(new StringReader(contentFich));
+	        } else {
+	        	throw new GiftReaderException("No questions in the quizz.");
+	        }		
 		} catch (Exception e){
 			System.out.println(e.toString());
 		}  	
@@ -70,8 +63,13 @@ public class WikiReader implements QuizReader {
 			// récupère le contenu
 			String contentFich = doc.getDocumentElement().getTextContent();
 			
-			StringReader reader = new StringReader(contentFich);
-	        parse(reader);	
+			StringReader readerVerif = new StringReader(contentFich);
+			// on vérifie que le quizz est composé d'au moins une question
+	        if (containsLeastOneQuestion(readerVerif)) {
+	        	parse(new StringReader(contentFich));
+	        } else {
+	        	throw new GiftReaderException("No questions in the quizz.");
+	        }
 		} catch (Exception e){
 			System.out.println(e.toString());
 		}  	
@@ -173,9 +171,9 @@ public class WikiReader implements QuizReader {
     		
     		blockAnswer += (char)currentChar;
     	}
-    	if (currentChar == -1) {
-			throw new GiftReaderQuestionWithInvalidFormatException();
-		}
+    	//if (currentChar == -1) {
+			//throw new GiftReaderQuestionWithInvalidFormatException();
+		//}
     	return blockAnswer;
     }
     
@@ -186,151 +184,16 @@ public class WikiReader implements QuizReader {
     		quizContentHandler.onEndAnswer();
     	}
     }
-
-    private void checkQuestionHasStarted() {
-        if (!questionHasStarted) {
-            questionHasStarted = true;
-            quizContentHandler.onStartQuestion();
-        }
-    }
-
-    private void endQuiz() throws GiftReaderQuestionWithInvalidFormatException {
-        if (!questionHasEnded && !answerFragmentHasEnded) {
-            throw new GiftReaderQuestionWithInvalidFormatException();
-        }
-        if (!questionHasEnded) {
-            flushAccumulator();
-            questionHasEnded = true;
-            quizContentHandler.onEndQuestion();
-        }
-
-    }
-
-    private void processAntiSlashCharacter() throws GiftReaderNotEscapedCharacterException {
-        if (escapeMode) {
-            processAnyCharacter('\\');
-            return;
-        }
-        escapeMode = true;
-    }
-
-    private void processLeftBracketCharacter() throws GiftReaderNotEscapedCharacterException {
-        if (escapeMode) {
-            processAnyCharacter('{');
-            return;
-        }
-        if (answerFragmentHasStarted) {
-            throw new GiftReaderNotEscapedCharacterException();
-        }
-        flushAccumulator();
-        answerFragmentHasStarted = true;
-        answerFragmentHasEnded = false;
-        quizContentHandler.onStartAnswerBlock();
-
-    }
-
-    private void processRightBracketCharacter() throws GiftReaderNotEscapedCharacterException {
-        if (escapeMode) {
-            processAnyCharacter('}');
-            return;
-        }
-        if (!answerFragmentHasStarted) {
-            throw  new GiftReaderNotEscapedCharacterException();
-        }
-        flushAccumulator();
-        answerFragmentHasEnded = true;
-        answerFragmentHasStarted = false;
-        if (answerHasStarted) {
-            answerHasStarted = false;
-            quizContentHandler.onEndAnswer();
-        }
-        quizContentHandler.onEndAnswerBlock();
-
-    }
-
-    private void processEqualCharacter() throws GiftReaderException {
-        processAnswerPrefix('=');
-    }
-
-    private void processTildeCharacter() throws GiftReaderException {
-        processAnswerPrefix('~');
-    }
-
-    private void processAnswerPrefix(char prefix) throws GiftReaderNotEscapedCharacterException {
-        if (escapeMode) {
-            processAnyCharacter(prefix);
-            return;
-        }
-        if (!answerFragmentHasStarted) {
-            throw new GiftReaderNotEscapedCharacterException();
-        }
-        flushAccumulator();
-        if (answerFeedbackHasStarted) {
-            answerFeedbackHasStarted = false;
-            getQuizContentHandler().onEndAnswerFeedBack();
-        }
-        if (answerHasStarted) { // the '=' or '~' char marks the end of the current answer
-            getQuizContentHandler().onEndAnswer();
-        } else {
-            answerHasStarted = true;
-        }
-        answerCreditHasStarted = false;
-        answerCreditHasEnded = false;
-        //getQuizContentHandler().onStartAnswer(String.valueOf(prefix)); // it marks the beginning of a new one too
-    }
-
-    private void processSharpCharacter() throws GiftReaderNotEscapedCharacterException {
-        if (escapeMode) {
-            processAnyCharacter('#');
-            return;
-        }
-        if (!answerHasStarted || answerFeedbackHasStarted) {
-            throw new GiftReaderNotEscapedCharacterException();
-        }
-        flushAccumulator();
-        answerFeedbackHasStarted = true;
-        getQuizContentHandler().onStartAnswerFeedBack(); // it marks the beginning of a new one too
-    }
-
-    private void processPercentCharacter() throws GiftReaderNotEscapedCharacterException {
-        if (escapeMode) {
-            processAnyCharacter('%');
-            return;
-        }
-        if (!answerHasStarted || answerCreditHasEnded) {
-            throw new GiftReaderNotEscapedCharacterException();
-        }
-        flushAccumulator();
-        if (answerCreditHasStarted) {
-            answerCreditHasStarted = false ;
-            answerCreditHasEnded = true;
-            getQuizContentHandler().onEndAnswerCredit();
-        } else {
-            answerCreditHasStarted = true ;
-            getQuizContentHandler().onStartAnswerCredit();
-        }
-
-    }
-
-    private void processAnyCharacter(int currentChar) throws GiftReaderNotEscapedCharacterException {
-        if (accumulator == null) {
-            accumulator = new StringBuffer();
-        }
-        accumulator.append((char) currentChar);
-        if (controlCharAccumulator != -1) { // if a control caracter is present,
-            if (controlCharAccumulator != '\\') {  // it must be a \
-                throw new GiftReaderNotEscapedCharacterException();
-            }
-            controlCharAccumulator = -1;
-        }
-        escapeMode = false;
-    }
-
-    private void flushAccumulator() {
-        if (accumulator != null) {
-            quizContentHandler.onString(accumulator.toString());
-            accumulator = null;
-        }
+    
+    public boolean containsLeastOneQuestion(Reader reader) throws IOException {
+    	boolean trouve = false;
+    	int currentChar;
+    	while((currentChar = reader.read()) != -1)  {
+    		if (currentChar == '{') {
+    			trouve = true;
+    		}
+    	}
+    	return trouve;
     }
 
     public QuizContentHandler getQuizContentHandler() {
@@ -340,6 +203,5 @@ public class WikiReader implements QuizReader {
     public void setQuizContentHandler(QuizContentHandler quizContentHandler) {
         this.quizContentHandler = quizContentHandler;
     }
-
 
 }
