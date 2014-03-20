@@ -39,8 +39,7 @@ public class MainWiki {
 			Quiz testQuestion = me.getQuizFromWikiText("C:\\Users\\user\\git\\TSaaP-parser\\src\\main\\java\\main\\TestQuizz.txt");
 			
 			for (Question quest : testQuestion.getQuestionList()) {
-				System.out.println("Titre Question : " + quest.getTitle());
-				System.out.println("Question : " + quest.getTextBlockList().get(0).getText());
+				System.out.println("toto : " + quest.getTextBlockList().get(0).getText());
 				System.out.println("Reponses : ");
 				for (AnswerBlock txt : quest.getAnswerBlockList()) {
 					for (Answer ans : txt.getAnswerList()) {

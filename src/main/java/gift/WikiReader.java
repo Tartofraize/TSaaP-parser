@@ -174,6 +174,7 @@ public class WikiReader implements QuizReader {
     	String[] decoupe = blockAnswer.split("\n");
     	for (int i = 0; i < decoupe.length; i++) {
     		quizContentHandler.onStartAnswer(decoupe[i].charAt(0), decoupe[i].substring(2,decoupe[i].length()-1));
+    		quizContentHandler.onEndAnswer();
     	}
     }
 
