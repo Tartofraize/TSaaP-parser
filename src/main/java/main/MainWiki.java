@@ -36,7 +36,7 @@ public class MainWiki {
 		GiftQuestionService me = new GiftQuestionService();
 		
 		try {
-			Quiz testQuestion = me.getQuizFromWikiText("C:\\Users\\user\\git\\TSaaP-parser\\src\\main\\java\\main\\TestQuizz.txt");
+			Quiz testQuestion = me.getQuizFromWikiText("main/TestQuizz.txt");
 			
 			for (Question quest : testQuestion.getQuestionList()) {
 				System.out.println("\nNom : " + quest.getTextBlockList().get(0).getText());
