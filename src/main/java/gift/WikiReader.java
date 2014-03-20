@@ -87,12 +87,11 @@ public class WikiReader implements QuizReader {
     	String questionADecouper = "";
     	String blockAnswer = "";
     	
-    	currentChar = reader.read();
-        while (currentChar != -1) {
+        while ((currentChar= reader.read()) != -1) {
         	System.out.println("debDUneBoucle");
 
         	// recupere la question
-        	questionADecouper = betweenTwoChar(reader, leftBracketCharacter, rightBracketCharacter);
+        	questionADecouper = betweenTwoChar(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
         	// début de la question
         	quizContentHandler.onStartQuestion();
         	// découpe la question
@@ -127,14 +126,16 @@ public class WikiReader implements QuizReader {
      * @param finish, le caractère de fin
      * @return la string contenu entre les 2 caractères
      */
-    public String betweenTwoChar(Reader reader, char start, char finish) throws GiftReaderQuestionWithInvalidFormatException, IOException {
+    public String betweenTwoChar(Reader reader, int currentChar, char start, char finish) throws GiftReaderQuestionWithInvalidFormatException, IOException {
     	String questionADecouper = "";
-    	int currentChar;
-		// on cherche le premier caractère
-		while(((currentChar = reader.read()) != -1) && (currentChar != start));
-		if (currentChar == -1) {
-			throw new GiftReaderQuestionWithInvalidFormatException();
-		}
+    	
+    	if (currentChar != '{') {
+			// on cherche le premier caractère
+			while(((currentChar = reader.read()) != -1) && (currentChar != start));
+			if (currentChar == -1) {
+				throw new GiftReaderQuestionWithInvalidFormatException();
+			}
+    	}
 		// quand on l'a trouvé, on concatène la chaine résultat
 		while(((currentChar = reader.read()) != -1) && (currentChar != finish)) {
     		questionADecouper += (char) currentChar;
