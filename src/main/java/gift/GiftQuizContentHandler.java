@@ -134,6 +134,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
 
     /**
      * Receive notification of the beginning of an answer
+     * Méthode uilisée dans GiftReader
      */
     public void onStartAnswer(String prefix) {
         currentAnswer = new AnswerImpl();
@@ -144,6 +145,24 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         } else {
             currentAnswer.setPercentCredit(0f);
         }
+    }
+    
+    /**
+     * Receive notification of the beginning of an answer
+     * Méthode utilisée dans le nouveau WikiReader
+     */
+    public void onStartAnswer(char prefix, String nom) {
+        currentAnswer = new AnswerImpl();
+        currentAnswer.setIdentifier(String.valueOf(answerCounter++));
+        currentAnswer.setTextValue(nom);
+        
+        if ("+".equals(prefix)) {
+            currentAnswer.setPercentCredit(100f);
+        } else {
+            currentAnswer.setPercentCredit(0f);
+        }
+        
+        System.out.println("ID Answer: "+ currentAnswer.getIdentifier() +" Value : "+currentAnswer.getTextValue() + " Float : " + currentAnswer.getPercentCredit());
     }
 
     /**

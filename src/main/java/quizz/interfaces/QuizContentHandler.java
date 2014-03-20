@@ -54,6 +54,7 @@ public interface QuizContentHandler {
     /**
      * Receive notification of the beginning of an answer
      */
+    public void onStartAnswer(char prefix, String nom);
     public void onStartAnswer(String prefix);
 
 

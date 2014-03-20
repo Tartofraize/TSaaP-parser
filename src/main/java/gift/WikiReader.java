@@ -78,20 +78,55 @@ public class WikiReader implements QuizReader {
     }
     
     public void parse(Reader reader) throws IOException, GiftReaderException {
-        // lancement du quizz
+    	// lancement du quizz
     	quizContentHandler.onStartQuiz();
     	
         int currentChar;
         while ((currentChar = reader.read()) != -1) {
         	System.out.println("debDUneBoucle");
+        	
         	// recupere la question
-        	String questionADecouper = betweenTwoChar(reader, '{', '}');
+        	String questionADecouper = "";
+        	char rightBracketCharacter = '{';
+        	char leftBracketCharacter = '}';
+        	// on cherche le premier caractère {
+			while((currentChar = reader.read()) != rightBracketCharacter);
+			// quand on l'a trouvé, on concatène la chaine résultat jusqu'à }
+			while((currentChar = reader.read()) != leftBracketCharacter) {
+	    		questionADecouper += (char) currentChar;
+	    	}	
+			
         	// début de la question
         	quizContentHandler.onStartQuestion();
         	// découpe la question
         	decoupeQuestion(questionADecouper);
         	// fin de la question
         	quizContentHandler.onEndQuestion();
+        	
+        	// supprime ligne \n
+        	while((currentChar = reader.read()) != '\n');
+        	
+        	// recupere le bloc de réponse
+        	String blockAnswer = "";
+        	boolean ok = false;
+        	char lastChar = ' ';
+        	while((currentChar = reader.read()) != '\n' || lastChar != '\n')  {
+        		if(currentChar == '\n') {
+        			lastChar = '\n';
+        		} else {
+        			lastChar = ' ';
+        		}
+        		
+        		blockAnswer += (char)currentChar;
+	    	}
+ 
+        	// début du block reponse
+        	quizContentHandler.onStartAnswerBlock();
+        	// découpe le clock
+        	decoupeBlockAnswer(blockAnswer);
+        	// fin de lu block de réponse
+        	quizContentHandler.onEndAnswerBlock();
+        	
         	// recupere les reponses
         	System.out.println("finDUneBoucle");
         }
@@ -133,6 +168,13 @@ public class WikiReader implements QuizReader {
     	String nomDeLaQuestion = decoupe[0];    	
     	char typeDelaQuestion = decoupe[1].charAt(6);
     	quizContentHandler.onModifQuestion(nomDeLaQuestion, typeDelaQuestion);
+    }
+    
+    public void decoupeBlockAnswer(String blockAnswer) {
+    	String[] decoupe = blockAnswer.split("\n");
+    	for (int i = 0; i < decoupe.length; i++) {
+    		quizContentHandler.onStartAnswer(decoupe[i].charAt(0), decoupe[i].substring(2,decoupe[i].length()-1));
+    	}
     }
 
     private void checkQuestionHasStarted() {
@@ -224,7 +266,7 @@ public class WikiReader implements QuizReader {
         }
         answerCreditHasStarted = false;
         answerCreditHasEnded = false;
-        getQuizContentHandler().onStartAnswer(String.valueOf(prefix)); // it marks the beginning of a new one too
+        //getQuizContentHandler().onStartAnswer(String.valueOf(prefix)); // it marks the beginning of a new one too
     }
 
     private void processSharpCharacter() throws GiftReaderNotEscapedCharacterException {
