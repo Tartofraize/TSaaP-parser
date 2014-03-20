@@ -48,7 +48,7 @@ public class WikiReader implements QuizReader {
 
 			// récupère le contenu
 			String contentFich = doc.getDocumentElement().getTextContent();
-			
+			System.out.println(contentFich);
 			StringReader reader = new StringReader(contentFich);
 	        parse(reader);	
 		} catch (Exception e){
@@ -82,56 +82,41 @@ public class WikiReader implements QuizReader {
     	quizContentHandler.onStartQuiz();
     	
         int currentChar;
-        while ((currentChar = reader.read()) != -1) {
+        char leftBracketCharacter = '{';
+    	char rightBracketCharacter = '}';
+    	String questionADecouper = "";
+    	String blockAnswer = "";
+    	
+    	currentChar = reader.read();
+        while (currentChar != -1) {
         	System.out.println("debDUneBoucle");
-        	
+
         	// recupere la question
-        	String questionADecouper = "";
-        	char rightBracketCharacter = '{';
-        	char leftBracketCharacter = '}';
-        	// on cherche le premier caractère {
-			while((currentChar = reader.read()) != rightBracketCharacter);
-			// quand on l'a trouvé, on concatène la chaine résultat jusqu'à }
-			while((currentChar = reader.read()) != leftBracketCharacter) {
-	    		questionADecouper += (char) currentChar;
-	    	}	
-			
+        	questionADecouper = betweenTwoChar(reader, leftBracketCharacter, rightBracketCharacter);
         	// début de la question
         	quizContentHandler.onStartQuestion();
         	// découpe la question
         	decoupeQuestion(questionADecouper);
+        	
+        	// supprime ligne \n
+        	currentChar = reader.read();
+        	
+        	// recupere le bloc de réponse
+        	blockAnswer = recupBlockAnswer(reader);
+        	// début du block reponse
+        	quizContentHandler.onStartAnswerBlock();
+        	// découpe le block
+        	decoupeBlockAnswer(blockAnswer);       	
+        	// fin du block de réponse
+        	quizContentHandler.onEndAnswerBlock();
+        	
         	// fin de la question
         	quizContentHandler.onEndQuestion();
         	
-        	// supprime ligne \n
-        	while((currentChar = reader.read()) != '\n');
-        	
-        	// recupere le bloc de réponse
-        	String blockAnswer = "";
-        	boolean ok = false;
-        	char lastChar = ' ';
-        	while((currentChar = reader.read()) != '\n' || lastChar != '\n')  {
-        		if(currentChar == '\n') {
-        			lastChar = '\n';
-        		} else {
-        			lastChar = ' ';
-        		}
-        		
-        		blockAnswer += (char)currentChar;
-	    	}
- 
-        	// début du block reponse
-        	quizContentHandler.onStartAnswerBlock();
-        	// découpe le clock
-        	decoupeBlockAnswer(blockAnswer);
-        	// fin de lu block de réponse
-        	quizContentHandler.onEndAnswerBlock();
-        	
-        	// recupere les reponses
         	System.out.println("finDUneBoucle");
         }
         
-        endQuiz();
+        //endQuiz();
         quizContentHandler.onEndQuiz();
     }
     
@@ -142,19 +127,22 @@ public class WikiReader implements QuizReader {
      * @param finish, le caractère de fin
      * @return la string contenu entre les 2 caractères
      */
-    public String betweenTwoChar(Reader bf, char start, char finish) {
+    public String betweenTwoChar(Reader reader, char start, char finish) throws GiftReaderQuestionWithInvalidFormatException, IOException {
     	String questionADecouper = "";
-    	int charCurrent;
-    	try {
-    		// on cherche le premier caractère
-			while(bf.read() != start);
-			// quand on l'a trouvé, on concatène la chaine résultat
-			while((charCurrent = bf.read()) != finish) {
-	    		questionADecouper += (char) charCurrent;
-	    	}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}   
+    	int currentChar;
+		// on cherche le premier caractère
+		while(((currentChar = reader.read()) != -1) && (currentChar != start));
+		if (currentChar == -1) {
+			throw new GiftReaderQuestionWithInvalidFormatException();
+		}
+		// quand on l'a trouvé, on concatène la chaine résultat
+		while(((currentChar = reader.read()) != -1) && (currentChar != finish)) {
+    		questionADecouper += (char) currentChar;
+    		
+    	} 
+		if (currentChar == -1) {			
+			throw new GiftReaderQuestionWithInvalidFormatException();
+		}
 		return questionADecouper;
     }
     
@@ -168,6 +156,26 @@ public class WikiReader implements QuizReader {
     	String nomDeLaQuestion = decoupe[0];    	
     	char typeDelaQuestion = decoupe[1].charAt(6);
     	quizContentHandler.onModifQuestion(nomDeLaQuestion, typeDelaQuestion);
+    }
+    
+    public String recupBlockAnswer(Reader reader) throws GiftReaderQuestionWithInvalidFormatException, IOException {
+    	boolean ok = false;
+    	char lastChar = ' ';
+    	String blockAnswer = "";
+    	int currentChar;
+    	while(((currentChar = reader.read()) != -1) && (currentChar != '\n' || lastChar != '\n'))  {
+    		if(currentChar == '\n') {
+    			lastChar = '\n';
+    		} else {
+    			lastChar = ' ';
+    		}
+    		
+    		blockAnswer += (char)currentChar;
+    	}
+    	if (currentChar == -1) {
+			throw new GiftReaderQuestionWithInvalidFormatException();
+		}
+    	return blockAnswer;
     }
     
     public void decoupeBlockAnswer(String blockAnswer) {
