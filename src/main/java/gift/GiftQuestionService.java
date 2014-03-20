@@ -18,6 +18,7 @@ package gift;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URL;
 
 import questions.interfaces.Question;
 import quizz.interfaces.Quiz;
@@ -63,10 +64,13 @@ public class GiftQuestionService {
      * @return the result quiz
      */
     public Quiz getQuizFromWikiText(String giftText) throws IOException, GiftReaderException {
-        GiftQuizContentHandler handler = new GiftQuizContentHandler();
+    	
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL input = classLoader.getResource(giftText);
+		GiftQuizContentHandler handler = new GiftQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);
-        quizReader.readFichier(giftText);
+        quizReader.readFichier(input);    	
         return handler.getQuiz();
     }
 
