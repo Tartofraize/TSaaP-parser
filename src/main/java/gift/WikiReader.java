@@ -86,7 +86,23 @@ public class WikiReader implements QuizReader {
     	String blockAnswer = "";
     	
         while ((currentChar= reader.read()) != -1) {
-        	System.out.println("debDUneBoucle");
+//        	System.out.println("debDUneBoucle");
+//        	
+//        	switch (currentChar) {
+//			case '{':
+//				
+//				break;
+//
+//			case '}':
+//				
+//				break;
+//				
+//			case 'c':
+//				break;
+//			
+//			default:
+//				break;
+//			}
 
         	// recupere la question
         	questionADecouper = betweenTwoChar(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
@@ -134,7 +150,7 @@ public class WikiReader implements QuizReader {
 				throw new GiftReaderQuestionWithInvalidFormatException();
 			}
     	}
-		// quand on l'a trouvé, on concatène la chaine résultat
+		 //quand on l'a trouvé, on concatène la chaine résultat
 		while(((currentChar = reader.read()) != -1) && (currentChar != finish)) {
     		questionADecouper += (char) currentChar;
     		
@@ -142,6 +158,8 @@ public class WikiReader implements QuizReader {
 		if (currentChar == -1) {			
 			throw new GiftReaderQuestionWithInvalidFormatException();
 		}
+    	
+    	
 		return questionADecouper;
     }
     
