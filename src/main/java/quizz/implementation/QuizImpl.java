@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import questions.interfaces.Question;
+import questions.interfaces.TextBlock;
 import quizz.interfaces.Quiz;
+import reponses.interfaces.Answer;
+import reponses.interfaces.AnswerBlock;
 
 /**
  * @author franck Silvestre
@@ -46,5 +49,22 @@ public class QuizImpl implements Quiz {
      */
     public List<Question> getQuestionList() {
         return questionList;
+    }
+
+    @Override
+    public void getGraphe() {
+        for (Question question : this.getQuestionList()) {
+            System.out.println("Voici la question ");
+            for (TextBlock text : question.getTextBlockList()) {
+                System.out.println(text.getText());
+            }
+            System.out.println("Reponses possibles :");
+            for (AnswerBlock answerB : question.getAnswerBlockList()) {
+                for (Answer answer : answerB.getAnswerList()) {
+                    System.out.println("-"+answer.getTextValue());
+                }
+            }
+            System.out.println("");
+        }
     }
 }

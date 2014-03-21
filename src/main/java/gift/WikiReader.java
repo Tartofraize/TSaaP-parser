@@ -86,24 +86,6 @@ public class WikiReader implements QuizReader {
     	String blockAnswer = "";
     	
         while ((currentChar= reader.read()) != -1) {
-//        	System.out.println("debDUneBoucle");
-//        	
-//        	switch (currentChar) {
-//			case '{':
-//				
-//				break;
-//
-//			case '}':
-//				
-//				break;
-//				
-//			case 'c':
-//				break;
-//			
-//			default:
-//				break;
-//			}
-
         	// recupere la question
         	questionADecouper = betweenTwoChar(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
         	// début de la question
@@ -131,6 +113,9 @@ public class WikiReader implements QuizReader {
         
         //endQuiz();
         quizContentHandler.onEndQuiz();
+        System.out.println("methode du graphe");
+        quizContentHandler.getQuizz().getGraphe();
+
     }
     
     /**

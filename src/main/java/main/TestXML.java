@@ -11,23 +11,23 @@ import java.io.File;
 
 public class TestXML {
 
-	public static void main(String argv[]) {
+    public static void main(String argv[]) {
+        try {
 
-		try {
+            File fXmlFile = new File("C:\\Users\\user\\git\\TSaaP-parser\\src\\"
+                    + "main\\java\\main\\TestQuizz.txt");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
 
-			File fXmlFile = new File("C:\\Users\\user\\git\\TSaaP-parser\\src\\main\\java\\main\\TestQuizz.txt");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+            doc.getDocumentElement().normalize();
 
-			doc.getDocumentElement().normalize();
+            System.out.println(doc.getDocumentElement().getTextContent());
 
-			System.out.println(doc.getDocumentElement().getTextContent());
 
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

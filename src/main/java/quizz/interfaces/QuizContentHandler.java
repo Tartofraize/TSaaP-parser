@@ -87,5 +87,7 @@ public interface QuizContentHandler {
     public void onEndAnswerFeedBack();
 
 	public void onModifQuestion(String nomDeLaQuestion, char typeDelaQuestion);
+	
+	public Quiz getQuizz();
 
 }
