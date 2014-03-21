@@ -1,6 +1,5 @@
 package gift;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
@@ -12,7 +11,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
-import questions.interfaces.QuestionType;
 import quizz.interfaces.QuizContentHandler;
 import quizz.interfaces.QuizReader;
 
