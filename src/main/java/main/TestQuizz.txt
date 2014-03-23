@@ -1,15 +1,14 @@
-<quiz>
+<quiz display="simple">
 {Question
+sur plusieurs
+lignes
 |type="[]"}
-+ Correct answer.
-- Incorrect answer.
-+ Correct answer.
-- Incorrect answer.
-
-{Question
-|type="[]"}
-+ Correct answer.
-- Incorrect answer.
-+ Correct answer.
-- Incorrect answer.
++ reponse 1.
+|| com 1 
+sur 2 lignes
+- reponse 2.
++ reponse 3.
+|| commentaires
+- reponse 4.
+|| com 333333
 </quiz>

@@ -43,13 +43,12 @@ public class MainWiki {
 				System.out.println("Reponses : ");
 				for (AnswerBlock txt : quest.getAnswerBlockList()) {
 					for (Answer ans : txt.getAnswerList()) {
-						System.out.println("- "+ans.getTextValue());
+						System.out.println("-> "+ans.getTextValue()+". Com: "+ans.getFeedBack());
 					}
 				}
 			}
 			//me.getQuizFromGiftText("{Question\n|type=\"()\"}\n+ The correct answer.\n- Distractor.\n- Distractor.\n- Distractor.");
 		} catch (GiftReaderException | IOException e) {
-			System.out.println("erreur");
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}

@@ -57,6 +57,7 @@ public interface QuizContentHandler {
     public void onStartAnswer(char prefix, String nom);
     public void onStartAnswer(String prefix);
 
+    public void onModifAnswer(String com);
 
     /**
      * Receive notification of the end of an answer

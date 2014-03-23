@@ -153,11 +153,15 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         currentAnswer.setIdentifier(String.valueOf(answerCounter++));
         currentAnswer.setTextValue(nom);
         
-        if ("+".equals(prefix)) {
+        if ('+' ==prefix) {
             currentAnswer.setPercentCredit(100f);
         } else {
             currentAnswer.setPercentCredit(0f);
         }        
+    }
+    
+    public void onModifAnswer(String com) {
+        currentAnswer.setFeedback(com);
     }
 
     /**
