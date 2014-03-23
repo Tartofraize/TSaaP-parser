@@ -22,6 +22,7 @@ import questions.interfaces.Question;
 import questions.interfaces.QuestionType;
 import questions.interfaces.TextBlock;
 import quizz.implementation.QuizImpl;
+import quizz.interfaces.Quiz;
 import quizz.interfaces.QuizContentHandler;
 import reponses.implementation.AnswerBlockImpl;
 import reponses.implementation.AnswerImpl;
@@ -170,7 +171,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     public void onEndAnswer() {
         currentAnswerBlock.addAnswer(currentAnswer);
         currentAnswer = null;
-    }
+    } 
 
     /**
      * Notification of the beginning of a credit specification
@@ -230,6 +231,12 @@ public class GiftQuizContentHandler implements QuizContentHandler {
 
     private void postProcess(Question question) {
        //logger.debug("Post processing of the current question");
+    }
+
+
+    @Override
+    public Quiz getQuizz() {
+        return quiz;
     }
 
     //private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
