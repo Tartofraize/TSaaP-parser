@@ -70,7 +70,7 @@ public class GiftQuestionService {
 		GiftQuizContentHandler handler = new GiftQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);
-        quizReader.readFichier(input);    	
+        quizReader.readFileURL(input);    	
         return handler.getQuiz();
     }
 

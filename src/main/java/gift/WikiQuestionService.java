@@ -42,7 +42,7 @@ public class WikiQuestionService {
 		GiftQuizContentHandler handler = new GiftQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);
-        quizReader.readFichier(giftText);    	
+        quizReader.readFileFromString(giftText);    	
         return handler.getQuiz();
     }
 

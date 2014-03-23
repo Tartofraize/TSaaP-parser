@@ -23,15 +23,15 @@ public class MainPrincipal {
 
 	public static void main(String[] args) {
 		// TODO Stub de la méthode généré automatiquement
-		//String quizz;
+		String quizz;
 		String filePath = new File("ressources/TestQuizz.txt").getAbsolutePath();
 		
-		//quizz = recuperationQuestion(filePath);
+		quizz = recuperationQuestion(filePath);
 
-		GiftQuizContentHandler handler = new GiftQuizContentHandler();
-		WikiReader quizReader = new WikiReader();
-		quizReader.setQuizContentHandler(handler);
-		quizReader.readFichier(filePath);
+//		GiftQuizContentHandler handler = new GiftQuizContentHandler();
+//		WikiReader quizReader = new WikiReader();
+//		quizReader.setQuizContentHandler(handler);
+//		quizReader.readFichier(filePath);
 
         
 		
@@ -39,25 +39,25 @@ public class MainPrincipal {
 		
 		
 
-//		GiftQuestionService me = new GiftQuestionService();
-//		try {
-//			QuizImpl test = (QuizImpl) me.getQuizFromGiftText(quizz);
-//			for (Question question : test.getQuestionList()) {
-//				System.out.println(question.getTitle());
-//				for (TextBlock txt : question.getTextBlockList()) {
-//					System.out.println(txt.getText());
-//				}
-//				for (Answer txt : question.getAnswerBlockList().get(0).getAnswerList()) {
-//					System.out.println(txt.getTextValue());
-//				}
-//
-//			}
-//			
-//			//me.getQuizFromGiftText("{Question\n|type=\"()\"}\n+ The correct answer.\n- Distractor.\n- Distractor.\n- Distractor.");
-//		} catch (GiftReaderException | IOException e) {
-//			// TODO Bloc catch généré automatiquement
-//			e.printStackTrace();
-//		}		
+		GiftQuestionService me = new GiftQuestionService();
+		try {
+			QuizImpl test = (QuizImpl) me.getQuizFromGiftText(quizz);
+			for (Question question : test.getQuestionList()) {
+				System.out.println(question.getTitle());
+				for (TextBlock txt : question.getTextBlockList()) {
+					System.out.println(txt.getText());
+				}
+				for (Answer txt : question.getAnswerBlockList().get(0).getAnswerList()) {
+					System.out.println(txt.getTextValue());
+				}
+
+			}
+			
+			//me.getQuizFromGiftText("{Question\n|type=\"()\"}\n+ The correct answer.\n- Distractor.\n- Distractor.\n- Distractor.");
+		} catch (GiftReaderException | IOException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		}		
 	}
 
 	private static String recuperationQuestion(String filePath) {
