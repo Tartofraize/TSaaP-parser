@@ -1,6 +1,2 @@
 /target
 *.class
-/ressources
-.settings
-.classpath
-.project
