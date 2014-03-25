@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package gift;
+package wiki;
 
 /**
  * @author franck Silvestre
  */
-public class GiftReaderQuestionWithInvalidFormatException extends GiftReaderException {
+public class WikiReaderQuestionWithInvalidFormatException extends WikiReaderException {
 
-    public GiftReaderQuestionWithInvalidFormatException() {
+    public WikiReaderQuestionWithInvalidFormatException() {
         super("Question_with_invalid_format");
     }
 }

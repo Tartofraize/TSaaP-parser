@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package gift;
+package wiki;
 
+import quizz.interfaces.QuizReaderException;
 
 /**
  * @author franck Silvestre
  */
-public class GiftReaderNotEscapedCharacterException extends GiftReaderException {
+public class WikiReaderException extends QuizReaderException {
 
-    public GiftReaderNotEscapedCharacterException() {
-        super("Not_escaped_character");
+    public WikiReaderException(String message) {
+        super(message);
     }
+
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package gift;
+package wiki;
 
 
 import questions.implementation.QuestionImpl;
@@ -30,16 +30,13 @@ import reponses.implementation.AnswerImpl;
 /**
  * @author franck Silvestre
  */
-public class GiftQuizContentHandler implements QuizContentHandler {
+public class WikiQuizContentHandler implements QuizContentHandler {
 
     private QuizImpl quiz;
     private QuestionImpl currentQuestion;
     private AnswerBlockImpl currentAnswerBlock;
     private AnswerImpl currentAnswer;
-    private StringBuffer currentTitle;
-    private boolean answerCreditIsBeenBuilt;
-    private boolean feedbackIsBeenBuilt;
-    private int answerCounter ;
+    private int answerCounter;
 
     /**
      * Get the quiz
@@ -97,23 +94,7 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         quiz.addQuestion(currentQuestion);
         currentQuestion = null;
     }
-
-
-    /**
-     * Receive notification of the beginning of a title
-     */
-    public void onStartTitle() {
-        currentTitle = new StringBuffer();
-    }
-
-    /**
-     * Receive notification of the end of a title
-     */
-    public void onEndTitle() {
-        currentQuestion.setTitle(currentTitle.toString());
-        currentTitle = null;
-    }
-
+    
     /**
      * Receive notification of the beginning of an answer fragment
      */
@@ -132,7 +113,6 @@ public class GiftQuizContentHandler implements QuizContentHandler {
 
     /**
      * Receive notification of the beginning of an answer
-     * Méthode uilisée dans GiftReader
      */
     public void onStartAnswer(String prefix) {
         currentAnswer = new AnswerImpl();
@@ -147,7 +127,6 @@ public class GiftQuizContentHandler implements QuizContentHandler {
     
     /**
      * Receive notification of the beginning of an answer
-     * Méthode utilisée dans le nouveau WikiReader
      */
     public void onStartAnswer(char prefix, String nom) {
         currentAnswer = new AnswerImpl();
@@ -173,60 +152,6 @@ public class GiftQuizContentHandler implements QuizContentHandler {
         currentAnswer = null;
     } 
 
-    /**
-     * Notification of the beginning of a credit specification
-     */
-    public void onStartAnswerCredit() {
-        answerCreditIsBeenBuilt = true;
-    }
-
-    /**
-     * Notification of the end of a credit specification
-     */
-    public void onEndAnswerCredit() {
-        answerCreditIsBeenBuilt = false;
-    }
-
-    /**
-     * Receive notification of the beginning feedback
-     */
-    public void onStartAnswerFeedBack() {
-        feedbackIsBeenBuilt = true;
-    }
-
-    /**
-     * Receive notification of the end of a feedback
-     */
-    public void onEndAnswerFeedBack() {
-        feedbackIsBeenBuilt = false;
-    }
-
-    /**
-     * Receive notification of a new string
-     *
-     * @param str the received string
-     */
-    public void onString(final String str) {
-        String trimedStr = str.trim();
-        if (currentTitle != null) {
-            currentTitle.append(trimedStr);
-            //logger.debug("currentTitle | " + currentTitle.toString());
-        } else 
-        	if (answerCreditIsBeenBuilt) {
-            currentAnswer.setPercentCredit(new Float(trimedStr));
-        } else if (feedbackIsBeenBuilt) {
-            currentAnswer.setFeedback(trimedStr);
-        } else if (currentAnswer != null) {
-            currentAnswer.setTextValue(trimedStr);
-        } else if (currentQuestion != null && currentAnswerBlock == null) {
-            //logger.debug("Text fragment | " + str);
-            currentQuestion.addTextBlock(new TextBlock() {
-                public String getText() {
-                    return str;
-                }
-            });
-        }
-    }
 
 
     private void postProcess(Question question) {

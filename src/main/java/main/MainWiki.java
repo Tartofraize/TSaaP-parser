@@ -1,14 +1,9 @@
 package main;
 
-import gift.GiftReaderException;
-import gift.WikiQuestionService;
-
 import java.io.IOException;
 
-import questions.interfaces.Question;
-import quizz.interfaces.Quiz;
-import reponses.interfaces.Answer;
-import reponses.interfaces.AnswerBlock;
+import wiki.WikiQuestionService;
+import wiki.WikiReaderException;
 
 
 
@@ -19,9 +14,9 @@ public class MainWiki {
 		WikiQuestionService me = new WikiQuestionService();
 		
 		try {
-			Quiz testQuestion = me.getQuizFromWikiText("ressources/TestQuizz.txt");
+			me.getQuizFromWikiText("ressources/TestQuizz.txt");
 			
-		} catch (GiftReaderException | IOException e) {
+		} catch (WikiReaderException | IOException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package gift;
+package wiki;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -38,11 +38,11 @@ public class WikiQuestionService {
      * @param wikiText the wiki text
      * @return the result quiz
      */
-    public Quiz getQuizFromWikiText(String giftText) throws IOException, GiftReaderException {
-		GiftQuizContentHandler handler = new GiftQuizContentHandler();
+    public Quiz getQuizFromWikiText(String wikiText) throws IOException, WikiReaderException {
+		WikiQuizContentHandler handler = new WikiQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);
-        quizReader.readFileFromString(giftText);    	
+        quizReader.readFile(wikiText);    	
         return handler.getQuiz();
     }
 

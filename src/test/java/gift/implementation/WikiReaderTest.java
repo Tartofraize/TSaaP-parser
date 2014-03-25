@@ -2,8 +2,6 @@ package gift.implementation;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import gift.GiftReaderQuestionWithInvalidFormatException;
-import gift.WikiReader;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -11,6 +9,8 @@ import java.io.StringReader;
 import org.junit.Test;
 
 import quizz.interfaces.QuizContentHandler;
+import wiki.WikiReader;
+import wiki.WikiReaderQuestionWithInvalidFormatException;
 
 public class WikiReaderTest {
 	WikiReader wikiReader = new WikiReader();
@@ -44,7 +44,7 @@ public class WikiReaderTest {
 		try {
 			question = wikiReader.getQuestionFromQuizz(reader, currentChar, start, end);
 			assertTrue(question.equals("QuestionTest"));
-		} catch (GiftReaderQuestionWithInvalidFormatException e) {
+		} catch (WikiReaderQuestionWithInvalidFormatException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Erreur testGetQuestionFromQuizz : " + e.getMessage());
 		} catch (IOException e) {
@@ -66,7 +66,7 @@ public class WikiReaderTest {
 		try {
 			blockAnswer = wikiReader.getBlockAnswer(reader);
 			assertTrue(blockAnswer.equals("+ Correct answer.\n- Incorrect answer.\n"));
-		} catch (GiftReaderQuestionWithInvalidFormatException e) {
+		} catch (WikiReaderQuestionWithInvalidFormatException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Erreur testGetBlockAnswer : " + e.getMessage());
 		} catch (IOException e) {
