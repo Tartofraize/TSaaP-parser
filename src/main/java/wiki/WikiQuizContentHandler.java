@@ -16,7 +16,6 @@
 
 package wiki;
 
-
 import questions.implementation.QuestionImpl;
 import questions.interfaces.Question;
 import questions.interfaces.QuestionType;
@@ -46,7 +45,6 @@ public class WikiQuizContentHandler implements QuizContentHandler {
     public QuizImpl getQuiz() {
         return quiz;
     }
-
 
     /**
      * Receive notification of the beginning of a quiz
@@ -152,17 +150,12 @@ public class WikiQuizContentHandler implements QuizContentHandler {
         currentAnswer = null;
     } 
 
-
-
     private void postProcess(Question question) {
-       //logger.debug("Post processing of the current question");
     }
-
 
     @Override
     public Quiz getQuizz() {
         return quiz;
     }
-
-    //private static Logger logger = Logger.getLogger(GiftQuizContentHandler.class);
+    
 }
