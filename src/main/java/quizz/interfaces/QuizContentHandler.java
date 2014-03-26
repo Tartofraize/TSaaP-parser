@@ -1,5 +1,7 @@
 package quizz.interfaces;
 
+import quizz.implementation.QuizImpl;
+
 /**
  * @author franck Silvestre
  */
@@ -49,6 +51,6 @@ public interface QuizContentHandler {
 
 	public void onModifQuestion(String nomDeLaQuestion, char typeDelaQuestion);
 	
-	public Quiz getQuizz();
+	public QuizImpl getQuiz();
 
 }

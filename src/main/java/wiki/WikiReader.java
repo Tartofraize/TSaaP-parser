@@ -97,7 +97,7 @@ public class WikiReader implements QuizReader {
         
         quizContentHandler.onEndQuiz();
         System.out.println("\n--------Methode du graphe----------\n");
-        quizContentHandler.getQuizz().getGraphe();
+        quizContentHandler.getQuiz().getGraphe();
     }
     
     /**

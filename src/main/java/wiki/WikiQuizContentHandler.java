@@ -108,20 +108,6 @@ public class WikiQuizContentHandler implements QuizContentHandler {
         currentQuestion.addAnswerBlock(currentAnswerBlock);
         currentAnswerBlock = null;
     }
-
-    /**
-     * Receive notification of the beginning of an answer
-     */
-    public void onStartAnswer(String prefix) {
-        currentAnswer = new AnswerImpl();
-        currentAnswer.setIdentifier(String.valueOf(answerCounter++));
-        if ("=".equals(prefix)) {
-            currentAnswer.setPercentCredit(100f);
-            currentQuestion.setQuestionType(QuestionType.ExclusiveChoice);
-        } else {
-            currentAnswer.setPercentCredit(0f);
-        }
-    }
     
     /**
      * Receive notification of the beginning of an answer
@@ -153,9 +139,35 @@ public class WikiQuizContentHandler implements QuizContentHandler {
     private void postProcess(Question question) {
     }
 
-    @Override
-    public Quiz getQuizz() {
-        return quiz;
-    }
-    
+	public QuestionImpl getCurrentQuestion() {
+		return currentQuestion;
+	}
+
+	public void setCurrentQuestion(QuestionImpl currentQuestion) {
+		this.currentQuestion = currentQuestion;
+	}
+
+	public AnswerBlockImpl getCurrentAnswerBlock() {
+		return currentAnswerBlock;
+	}
+
+	public void setCurrentAnswerBlock(AnswerBlockImpl currentAnswerBlock) {
+		this.currentAnswerBlock = currentAnswerBlock;
+	}
+
+	public AnswerImpl getCurrentAnswer() {
+		return currentAnswer;
+	}
+
+	public void setCurrentAnswer(AnswerImpl currentAnswer) {
+		this.currentAnswer = currentAnswer;
+	}
+
+	public int getAnswerCounter() {
+		return answerCounter;
+	}
+
+	public void setAnswerCounter(int answerCounter) {
+		this.answerCounter = answerCounter;
+	}    
 }
