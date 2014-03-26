@@ -2,58 +2,97 @@ package reponses.implementation;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import questions.implementation.QuestionImpl;
 
 public class AnswerImplTest {
 
-	@Test
-	public void testHashCode() {
-		fail("Not yet implemented");
+	private AnswerImpl answer;
+	
+	@Before
+	public void initialize() {
+		answer = new AnswerImpl();
 	}
 
-	@Test
-	public void testEqualsObject() {
-		fail("Not yet implemented");
+	@After
+	public void clean() {
+		answer = null;
 	}
 
 	@Test
 	public void testGetTextValue() {
-		fail("Not yet implemented");
+		assertEquals(answer.getTextValue(), null);
+
+		answer.setTextValue("A value");
+		assertEquals(answer.getTextValue(), "A value");
 	}
 
 	@Test
 	public void testSetTextValue() {
-		fail("Not yet implemented");
+		assertEquals(answer.getTextValue(), null);
+
+		answer.setTextValue("A value");
+		assertEquals(answer.getTextValue(), "A value");
+
+		assertNotEquals(answer.getTextValue(), "A new value");
 	}
 
 	@Test
 	public void testGetPercentCredit() {
-		fail("Not yet implemented");
+		assertEquals(answer.getPercentCredit(), null);
+
+		answer.setPercentCredit(3.f);
+		assertEquals(answer.getPercentCredit(), 3.f, 0.0001);
 	}
 
 	@Test
 	public void testSetPercentCredit() {
-		fail("Not yet implemented");
-	}
+		assertEquals(answer.getPercentCredit(), null);
 
+		answer.setPercentCredit(3.f);
+		assertEquals(answer.getPercentCredit(), 3.f, 0.0001);
+		
+		assertNotEquals(answer.getPercentCredit(), 3.2f, 0.0001);
+	}
+	
+	
 	@Test
 	public void testGetIdentifier() {
-		fail("Not yet implemented");
+		assertEquals(answer.getIdentifier(), null);
+
+		answer.setIdentifier("An id");
+		assertEquals(answer.getIdentifier(), "An id");
 	}
 
 	@Test
 	public void testSetIdentifier() {
-		fail("Not yet implemented");
-	}
+		assertEquals(answer.getIdentifier(), null);
 
-	@Test
-	public void testSetFeedback() {
-		fail("Not yet implemented");
+		answer.setIdentifier("An id");
+		assertEquals(answer.getIdentifier(), "An id");
+		
+		assertNotEquals(answer.getIdentifier(), "A new id");		
 	}
 
 	@Test
 	public void testGetFeedBack() {
-		fail("Not yet implemented");
+		assertEquals(answer.getFeedBack(), null);
+
+		answer.setFeedback("A com");
+		assertEquals(answer.getFeedBack(), "A com");	
+	}
+	
+	@Test
+	public void testSetFeedback() {
+		assertEquals(answer.getFeedBack(), null);
+
+		answer.setFeedback("A com");
+		assertEquals(answer.getFeedBack(), "A com");
+		
+		assertNotEquals(answer.getFeedBack(), "A new com");
 	}
 
 }

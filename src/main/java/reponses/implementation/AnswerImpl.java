@@ -29,23 +29,6 @@ public class AnswerImpl implements Answer {
     private String identifier;
     private String feedback;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AnswerImpl that = (AnswerImpl) o;
-
-        if (!identifier.equals(that.identifier)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return identifier.hashCode();
-    }
-
     /**
      * Get the text value of the answer
      *
