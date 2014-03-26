@@ -72,9 +72,7 @@ public class WikiReader implements QuizReader {
         	questionToSplit = getQuestionFromQuizz(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
         	
         	quizContentHandler.onStartQuestion();
-        	
-//        	questionType = splitQuestion(questionToSplit);
-        	
+        	       	
         	questionName = getQuestionName(questionToSplit);
         	questionType = getQuestionType(questionToSplit);
         	
@@ -129,29 +127,6 @@ public class WikiReader implements QuizReader {
 			throw new WikiReaderQuestionWithInvalidFormatException();
 		}
 		return questionToSplit;
-    }
-    
-    /**
-     * Split a string to get the name and the type of the question
-     * @param questionToSplit The string to split
-     * @return the type of the question
-     */
-    public char splitQuestion(String questionToSplit) {  	
-    	char questionType;
-    	
-    	questionToSplit = questionToSplit.replaceAll("\n", " ");
-    	String[] result = questionToSplit.split("\\|");
-    	String questionName = result[0];
-    	
-    	if (result[1].contains("[")) {
-			questionType = '[';
-		} else {
-			questionType = '(';
-		}
-    	
-    	quizContentHandler.onModifQuestion(questionName, questionType);
-    	
-    	return questionType;
     }
     
     /**
