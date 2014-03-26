@@ -21,6 +21,9 @@ package quizz.interfaces;
  */
 public class QuizReaderException extends Exception {
 
+	/**
+	 * @param message Message of the exception
+	 */
     public QuizReaderException(String message) {
         super(message);
     }

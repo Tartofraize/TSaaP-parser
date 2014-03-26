@@ -30,5 +30,10 @@ public interface Quiz {
      * @return  the question list
      */
     public List<Question> getQuestionList();
+    
+    /**
+     * Print the quizz to the console.
+     */
     public void getGraphe();
+    
 }

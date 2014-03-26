@@ -56,15 +56,18 @@ public class QuestionImpl implements Question {
 
     /**
      * Set the question type
-     * @param questionType the question type
+     * @param theQuestionType the question type
      */
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
+    public void setQuestionType(QuestionType theQuestionType) {
+        this.questionType = theQuestionType;
     }
 
-
-    public void setTitle(String title) {
-        this.title = title;
+    /**
+     * Set the question title
+     * @param theTitle the question title
+     */
+    public void setTitle(String theTitle) {
+        this.title = theTitle;
     }
 
     /**
@@ -113,6 +116,5 @@ public class QuestionImpl implements Question {
     public List<TextBlock> getTextBlockList() {
         return textBlockList;
     }
-
 
 }

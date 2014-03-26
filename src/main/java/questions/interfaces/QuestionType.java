@@ -21,26 +21,29 @@ package questions.interfaces;
  */
 public enum QuestionType {
 
-    Undefined(0),
-    ExclusiveChoice(1),
-    MultipleChoice(2),
-    TrueFalse(3),
-    FillInTheBlank(4);
+	Undefined(0),
+	ExclusiveChoice(1),
+	MultipleChoice(2),
+	TrueFalse(3),
+	FillInTheBlank(4);
 
-    private int code;
+	private int code;
 
-    QuestionType(int code) {
-        this.code = code;
-    }
+	/**
+	 * Constructor
+	 * @param theCode integer corresponding to a question type
+	 */
+	QuestionType(int theCode) {
+		this.code = theCode;
+	}
 
-    /**
-     * Get the code of que question type
-     *
-     * @return the code
-     */
-    public int getCode() {
-        return code;
-    }
+	/**
+	 * Get the code of que question type
+	 *
+	 * @return the code
+	 */
+	public int getCode() {
+		return code;
+	}
+
 }
-
-

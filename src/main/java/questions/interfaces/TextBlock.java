@@ -21,5 +21,9 @@ package questions.interfaces;
  */
 public interface TextBlock extends QuestionBlock {
 
+	/**
+	 * @return The text of the questionBlock
+	 */
     public String getText();
+    
 }

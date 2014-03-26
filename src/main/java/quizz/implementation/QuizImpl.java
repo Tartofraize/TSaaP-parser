@@ -56,12 +56,12 @@ public class QuizImpl implements Quiz {
         for (Question question : this.getQuestionList()) {
             System.out.println("Voici la question ");
             for (TextBlock text : question.getTextBlockList()) {
-                System.out.println("-> "+text.getText());
+                System.out.println("-> " + text.getText());
             }
             System.out.println("Reponses possibles :");
             for (AnswerBlock answerB : question.getAnswerBlockList()) {
                 for (Answer answer : answerB.getAnswerList()) {
-					System.out.println("-> "+answer.getTextValue()+". Com: "+answer.getFeedBack());
+					System.out.println("-> " + answer.getTextValue() + ". Com: " + answer.getFeedBack());
                 }
             }
             System.out.println("");
