@@ -115,7 +115,7 @@ public class WikiReader implements QuizReader {
      * @throws IOException
      */
     public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException {
-    	String questionToSplit = "";
+    	StringBuilder questionToSplit = new StringBuilder();
     	
     	try {
 			if (currentChar != '{') {
@@ -125,7 +125,7 @@ public class WikiReader implements QuizReader {
 				}
 			}
 			while (((currentChar = reader.read()) != -1) && (currentChar != finish)) {
-				questionToSplit += (char) currentChar;
+				questionToSplit.append((char) currentChar);
 				
 			} 
 //			if (currentChar == -1) {			
@@ -134,7 +134,7 @@ public class WikiReader implements QuizReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	return questionToSplit;
+    	return questionToSplit.toString();
     }
     
     /**
@@ -232,7 +232,7 @@ public class WikiReader implements QuizReader {
     		} else if (result[i].contains("||")) { 
     			comment = result[i].substring(3, result[i].length() - 1);
     		} else {
-    			comment.concat(" " + result[i].substring(0, result[i].length() - 1));
+    			comment = comment.concat(" " + result[i].substring(0, result[i].length() - 1));
     		}
     	}
     	
