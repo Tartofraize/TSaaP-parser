@@ -55,7 +55,7 @@ public class WikiReader implements QuizReader {
      * @throws WikiReaderException 
      * @throws IOException 
      */
-    public void parse(Reader reader) throws IOException, WikiReaderException {
+    public void parse(Reader reader) throws WikiReaderException {
     	quizContentHandler.onStartQuiz();
     	
         int currentChar;
@@ -66,34 +66,38 @@ public class WikiReader implements QuizReader {
     	char questionType;
     	String questionName;
     	
-        while ((currentChar = reader.read()) != -1) {
-        	System.out.println("debDUneBoucle");
+        try {
+			while ((currentChar = reader.read()) != -1) {
+				System.out.println("debDUneBoucle");
 
-        	questionToSplit = getQuestionFromQuizz(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
-        	
-        	quizContentHandler.onStartQuestion();
-        	       	
-        	questionName = getQuestionName(questionToSplit);
-        	questionType = getQuestionType(questionToSplit);
-        	
-        	quizContentHandler.onModifQuestion(questionName, questionType);
-        	
-        	currentChar = reader.read();
-        	
-        	blockAnswer = getBlockAnswer(reader);
-        	
-        	checkNumberOfAnwsers(blockAnswer, questionType);
-        	
-        	quizContentHandler.onStartAnswerBlock();
-        	
-        	splitBlockAnswer(blockAnswer);       	
-        	
-        	quizContentHandler.onEndAnswerBlock();
-        	
-        	quizContentHandler.onEndQuestion();
-        	
-        	System.out.println("finDUneBoucle");
-        }
+				questionToSplit = getQuestionFromQuizz(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
+				
+				quizContentHandler.onStartQuestion();
+				       	
+				questionName = getQuestionName(questionToSplit);
+				questionType = getQuestionType(questionToSplit);
+				
+				quizContentHandler.onModifQuestion(questionName, questionType);
+				
+				currentChar = reader.read();
+				
+				blockAnswer = getBlockAnswer(reader);
+				
+				checkNumberOfAnwsers(blockAnswer, questionType);
+				
+				quizContentHandler.onStartAnswerBlock();
+				
+				splitBlockAnswer(blockAnswer);       	
+				
+				quizContentHandler.onEndAnswerBlock();
+				
+				quizContentHandler.onEndQuestion();
+				
+				System.out.println("finDUneBoucle");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         
         quizContentHandler.onEndQuiz();
         System.out.println("\n--------Methode du graphe----------\n");
@@ -110,23 +114,27 @@ public class WikiReader implements QuizReader {
      * @throws WikiReaderQuestionWithInvalidFormatException
      * @throws IOException
      */
-    public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException, IOException {
+    public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException {
     	String questionToSplit = "";
     	
-    	if (currentChar != '{') {
-			while (((currentChar = reader.read()) != -1) && (currentChar != start));
-			if (currentChar == -1) {
-				throw new WikiReaderQuestionWithInvalidFormatException();
+    	try {
+			if (currentChar != '{') {
+				while (((currentChar = reader.read()) != -1) && (currentChar != start));
+				if (currentChar == -1) {
+					throw new WikiReaderQuestionWithInvalidFormatException();
+				}
 			}
-    	}
-		while (((currentChar = reader.read()) != -1) && (currentChar != finish)) {
-			questionToSplit += (char) currentChar;
-    		
-    	} 
-		if (currentChar == -1) {			
-			throw new WikiReaderQuestionWithInvalidFormatException();
+			while (((currentChar = reader.read()) != -1) && (currentChar != finish)) {
+				questionToSplit += (char) currentChar;
+				
+			} 
+//			if (currentChar == -1) {			
+//				throw new WikiReaderQuestionWithInvalidFormatException();
+//			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return questionToSplit;
+    	return questionToSplit;
     }
     
     /**
@@ -184,20 +192,24 @@ public class WikiReader implements QuizReader {
      * @throws WikiReaderQuestionWithInvalidFormatException
      * @throws IOException
      */
-    public String getBlockAnswer(Reader reader) throws WikiReaderQuestionWithInvalidFormatException, IOException {
+    public String getBlockAnswer(Reader reader) {
     	char lastChar = ' ';
     	StringBuilder blockAnswer = new StringBuilder();
     	
     	int currentChar;
-    	while (((currentChar = reader.read()) != -1) && (currentChar != '\n' || lastChar != '\n'))  {
-    		if (currentChar == '\n') {
-    			lastChar = '\n';
-    		} else {
-    			lastChar = ' ';
-    		}
-    		
-    		blockAnswer.append((char) currentChar);
-    	}
+    	try {
+			while (((currentChar = reader.read()) != -1) && (currentChar != '\n' || lastChar != '\n'))  {
+				if (currentChar == '\n') {
+					lastChar = '\n';
+				} else {
+					lastChar = ' ';
+				}
+				
+				blockAnswer.append((char) currentChar);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     	return blockAnswer.toString();
     }
     
@@ -244,5 +256,9 @@ public class WikiReader implements QuizReader {
     public void setQuizContentHandler(QuizContentHandler quizContentHandler) {
         this.quizContentHandler = quizContentHandler;
     }    
+    
+    public QuizContentHandler getQuizContentHandler() {
+    	return this.quizContentHandler;
+    }
 
 }

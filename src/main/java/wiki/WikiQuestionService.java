@@ -38,7 +38,7 @@ public class WikiQuestionService {
      * @param wikiText the wiki text
      * @return the result quiz
      */
-    public Quiz getQuizFromWikiText(String wikiText) throws IOException, WikiReaderException {
+    public Quiz getQuizFromWikiText(String wikiText) throws WikiReaderException {
 		WikiQuizContentHandler handler = new WikiQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);

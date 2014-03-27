@@ -8,7 +8,10 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
+import quizz.interfaces.QuizContentHandler;
+import wiki.WikiQuizContentHandler;
 import wiki.WikiReader;
+import wiki.WikiReaderException;
 import wiki.WikiReaderQuestionWithInvalidFormatException;
 
 public class WikiReaderTest {
@@ -25,25 +28,30 @@ public class WikiReaderTest {
 	}
 
 	@Test
-	public void testGetQuestionFromQuizz() {
+	public void testGetQuestionFromQuizz() throws WikiReaderQuestionWithInvalidFormatException {
 		StringReader reader = new StringReader("{QuestionTest}blabla");
 		int currentChar = 0;
 		char start = '{';
 		char end = '}';
 		String question;
 		
-		try {
-			question = wikiReader.getQuestionFromQuizz(reader, currentChar, start, end);
-			assertTrue(question.equals("QuestionTest"));
-		} catch (WikiReaderQuestionWithInvalidFormatException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erreur testGetQuestionFromQuizz : " + e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erreur testGetQuestionFromQuizz : " + e.getMessage());
-		}
-	}
+		question = wikiReader.getQuestionFromQuizz(reader, currentChar, start, end);
+		assertTrue(question.equals("QuestionTest"));
 
+	}
+	
+	@Test(expected=WikiReaderQuestionWithInvalidFormatException.class)
+	public void testGetQuestionFromQuizzInvalidFormat() throws WikiReaderQuestionWithInvalidFormatException {
+		StringReader reader = new StringReader("QuestionTest}blabla");
+		int currentChar = 0;
+		char start = '{';
+		char end = '}';
+		String question;
+		
+		question = wikiReader.getQuestionFromQuizz(reader, currentChar, start, end);
+		assertTrue(question.equals("QuestionTest"));
+	}
+	
 	@Test
 	public void testGetQuestionName() {
 		String questionToSplit = "QuestionName|QuestionType=\"[]\"";
@@ -54,17 +62,45 @@ public class WikiReaderTest {
 	}
 
 	@Test
-	public void testGetQuestionType() {
+	public void testGetQuestionTypeMulti() {
 		String questionToSplit = "QuestionName|QuestionType=\"[]\"";
 		char result = 0;
 		result = wikiReader.getQuestionType(questionToSplit);
 		
 		assertTrue(result == '[');
 	}
-
+	
 	@Test
-	public void testCheckNumberOfAnwsers() {
-		fail("Pas encore implémenté");
+	public void testGetQuestionTypeExclu() {
+		String questionToSplit = "QuestionName|QuestionType=\"()\"";
+		char result = 0;
+		result = wikiReader.getQuestionType(questionToSplit);
+		
+		assertTrue(result == '(');
+	}
+	
+	@Test
+	public void testCheckNumberOfAnwsers() throws WikiReaderException{
+		String blockAnswer = "+ reponse 1.|| com 1 sur 2 lignes\n- reponse 2.\n+ reponse 3.|| commentaires\n- reponse 4.|| com 333333";
+		char questionType = '[';
+		
+		wikiReader.checkNumberOfAnwsers(blockAnswer, questionType);
+	}
+
+	@Test(expected=WikiReaderException.class)
+	public void testCheckNumberOfAnwsersMultiChoice() throws WikiReaderException{
+		String blockAnswer = "+ reponse 1.|| com 1 sur 2 lignes\n- reponse 2.\n+ reponse 3.|| commentaires\n- reponse 4.|| com 333333";
+		char questionType = '(';
+		
+		wikiReader.checkNumberOfAnwsers(blockAnswer, questionType);
+	}
+	
+	@Test(expected=WikiReaderException.class)
+	public void testCheckNumberOfAnwsersExclusifChoice() throws WikiReaderException{
+		String blockAnswer = "+ reponse 1.|| com 1 sur 2 lignes\n- reponse 2.\n- reponse 3.|| commentaires\n- reponse 4.|| com 333333";
+		char questionType = '[';
+		
+		wikiReader.checkNumberOfAnwsers(blockAnswer, questionType);
 	}
 
 	@Test
@@ -72,16 +108,8 @@ public class WikiReaderTest {
 		StringReader reader = new StringReader("+ Correct answer.\n- Incorrect answer.\n");
 		String blockAnswer;
 		
-		try {
-			blockAnswer = wikiReader.getBlockAnswer(reader);
-			assertTrue(blockAnswer.equals("+ Correct answer.\n- Incorrect answer.\n"));
-		} catch (WikiReaderQuestionWithInvalidFormatException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erreur testGetBlockAnswer : " + e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erreur testGetBlockAnswer : " + e.getMessage());
-		}
+		blockAnswer = wikiReader.getBlockAnswer(reader);
+		assertTrue(blockAnswer.equals("+ Correct answer.\n- Incorrect answer.\n"));
 	}
 
 	@Test
@@ -98,7 +126,9 @@ public class WikiReaderTest {
 
 	@Test
 	public void testSetQuizContentHandler() {
-		fail("Pas encore implémenté");
+		wikiReader.setQuizContentHandler(new WikiQuizContentHandler());
+		
+		assertTrue(wikiReader.getQuizContentHandler() != null);
 	}
 
 }
