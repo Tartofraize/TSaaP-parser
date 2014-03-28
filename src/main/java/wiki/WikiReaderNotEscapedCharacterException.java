@@ -22,6 +22,10 @@ package wiki;
  */
 public class WikiReaderNotEscapedCharacterException extends WikiReaderException {
 
+	/**
+	 * WikiReader Exception
+	 */
+	
     public WikiReaderNotEscapedCharacterException() {
         super("Not_escaped_character");
     }

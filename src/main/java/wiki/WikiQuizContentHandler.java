@@ -21,7 +21,6 @@ import questions.interfaces.Question;
 import questions.interfaces.QuestionType;
 import questions.interfaces.TextBlock;
 import quizz.implementation.QuizImpl;
-import quizz.interfaces.Quiz;
 import quizz.interfaces.QuizContentHandler;
 import reponses.implementation.AnswerBlockImpl;
 import reponses.implementation.AnswerImpl;
@@ -70,6 +69,8 @@ public class WikiQuizContentHandler implements QuizContentHandler {
     
     /**
      * Receive notification of the beginning of a question
+     * @param nomDeLaQuestion Name of the question
+     * @param typeDelaQuestion Type of the question
      */
     public void onModifQuestion(final String nomDeLaQuestion, char typeDelaQuestion) {
     	currentQuestion.addTextBlock(new TextBlock() {
@@ -111,19 +112,25 @@ public class WikiQuizContentHandler implements QuizContentHandler {
     
     /**
      * Receive notification of the beginning of an answer
+     * @param prefix prefix of the answer
+     * @param nom name of the answer
      */
     public void onStartAnswer(char prefix, String nom) {
         currentAnswer = new AnswerImpl();
         currentAnswer.setIdentifier(String.valueOf(answerCounter++));
         currentAnswer.setTextValue(nom);
         
-        if ('+' ==prefix) {
+        if ('+' == prefix) {
             currentAnswer.setPercentCredit(100f);
         } else {
             currentAnswer.setPercentCredit(0f);
         }        
     }
     
+    /**
+     * Receive notification on modification
+     * @param com the Modification
+     */
     public void onModifAnswer(String com) {
         currentAnswer.setFeedback(com);
     }
@@ -136,38 +143,75 @@ public class WikiQuizContentHandler implements QuizContentHandler {
         currentAnswer = null;
     } 
 
+    /**
+     * 
+     * @param question the question
+     */
+    
     private void postProcess(Question question) {
     }
+    
+    /**
+     * 
+     * @return the current question
+     */
 
 	public QuestionImpl getCurrentQuestion() {
 		return currentQuestion;
 	}
 
-	public void setCurrentQuestion(QuestionImpl currentQuestion) {
-		this.currentQuestion = currentQuestion;
+	/**
+	 * 
+	 * @param _currentQuestion the current question
+	 */
+	public void setCurrentQuestion(QuestionImpl _currentQuestion) {
+		this.currentQuestion = _currentQuestion;
 	}
-
+	/**
+	 * 
+	 * @return the current answerblock
+	 */
 	public AnswerBlockImpl getCurrentAnswerBlock() {
 		return currentAnswerBlock;
 	}
 
-	public void setCurrentAnswerBlock(AnswerBlockImpl currentAnswerBlock) {
-		this.currentAnswerBlock = currentAnswerBlock;
+	/**
+	 * 
+	 * @param _currentAnswerBlock the currrent answerblock
+	 */
+	public void setCurrentAnswerBlock(AnswerBlockImpl _currentAnswerBlock) {
+		this.currentAnswerBlock = _currentAnswerBlock;
 	}
 
+	/**
+	 * 
+	 * @return the current answer
+	 */
 	public AnswerImpl getCurrentAnswer() {
 		return currentAnswer;
 	}
 
-	public void setCurrentAnswer(AnswerImpl currentAnswer) {
-		this.currentAnswer = currentAnswer;
+	/**
+	 * 
+	 * @param _currentAnswer the current answer
+	 */
+	public void setCurrentAnswer(AnswerImpl _currentAnswer) {
+		this.currentAnswer = _currentAnswer;
 	}
 
+	/**
+	 * 
+	 * @return the count of answer
+	 */
 	public int getAnswerCounter() {
 		return answerCounter;
 	}
 
-	public void setAnswerCounter(int answerCounter) {
-		this.answerCounter = answerCounter;
+	/**
+	 * 
+	 * @param _answerCounter the real number
+	 */
+	public void setAnswerCounter(int _answerCounter) {
+		this.answerCounter = _answerCounter;
 	}    
 }

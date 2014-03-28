@@ -1,15 +1,13 @@
 package wiki.implementation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import questions.implementation.QuestionImpl;
-import quizz.implementation.QuizImpl;
-import reponses.implementation.AnswerBlockImpl;
-import reponses.implementation.AnswerImpl;
 import wiki.WikiQuizContentHandler;
 
 public class WikiQuizContentHandlerTest {
@@ -33,9 +31,9 @@ public class WikiQuizContentHandlerTest {
 
 	@Test
 	public void testOnStartQuiz() {
-		assertEquals(wiki.getQuiz(),null);
+		assertEquals(wiki.getQuiz(), null);
 		wiki.onStartQuiz();
-		assertNotEquals(wiki.getQuiz(),null);
+		assertNotEquals(wiki.getQuiz(), null);
 	}
 
 	@Test
@@ -45,9 +43,9 @@ public class WikiQuizContentHandlerTest {
 
 	@Test
 	public void testOnStartQuestion() {
-		assertEquals(wiki.getCurrentQuestion(),null);
+		assertEquals(wiki.getCurrentQuestion(), null);
 		wiki.onStartQuestion();
-		assertNotEquals(wiki.getCurrentQuestion(),null);
+		assertNotEquals(wiki.getCurrentQuestion(), null);
 	}
 
 	@Test

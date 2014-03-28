@@ -23,6 +23,11 @@ import quizz.interfaces.QuizReaderException;
  */
 public class WikiReaderException extends QuizReaderException {
 
+	/**
+	 * 
+	 * @param message Error message.
+	 */
+	
     public WikiReaderException(String message) {
         super(message);
     }

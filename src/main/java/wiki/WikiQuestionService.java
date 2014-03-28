@@ -17,12 +17,8 @@
 package wiki;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.net.URL;
 
-import questions.interfaces.Question;
 import quizz.interfaces.Quiz;
-import reponses.implementation.AnswerImpl;
 
 /**
  * @author Heiva
@@ -37,6 +33,8 @@ public class WikiQuestionService {
      *
      * @param wikiText the wiki text
      * @return the result quiz
+     * @throws WikiReaderException Exception for invalid format
+     * @throws IOException Exeption for Input
      */
     public Quiz getQuizFromWikiText(String wikiText) throws IOException, WikiReaderException {
 		WikiQuizContentHandler handler = new WikiQuizContentHandler();

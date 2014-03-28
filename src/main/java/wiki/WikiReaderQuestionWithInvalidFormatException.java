@@ -21,6 +21,11 @@ package wiki;
  */
 public class WikiReaderQuestionWithInvalidFormatException extends WikiReaderException {
 
+	/**
+	 * Exeption for invalid format question
+	 * 
+	 */
+	
     public WikiReaderQuestionWithInvalidFormatException() {
         super("Question_with_invalid_format");
     }

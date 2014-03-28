@@ -107,14 +107,16 @@ public class WikiReader implements QuizReader {
      * @param start 		Start character
      * @param finish 		End character
      * @return the question of the quiz
-     * @throws WikiReaderQuestionWithInvalidFormatException
-     * @throws IOException
+     * @throws WikiReaderQuestionWithInvalidFormatException Exeption for invalid format
+     * @throws IOException Exeption for Input
      */
     public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException, IOException {
     	String questionToSplit = "";
     	
     	if (currentChar != '{') {
-			while (((currentChar = reader.read()) != -1) && (currentChar != start));
+			while (((currentChar = reader.read()) != -1) && (currentChar != start)) {
+				continue;
+			}			
 			if (currentChar == -1) {
 				throw new WikiReaderQuestionWithInvalidFormatException();
 			}
@@ -161,6 +163,7 @@ public class WikiReader implements QuizReader {
      * Checks whether the type of question is consistent with the number of responses
      * @param blockAnswer The set of responses
      * @param questionType The type of the question
+     * @throws WikiReaderException Exeption for invalid format
      */
     public void checkNumberOfAnwsers(String blockAnswer, char questionType) throws WikiReaderException {
     	int nbPlus = 0;
@@ -181,8 +184,8 @@ public class WikiReader implements QuizReader {
      * Get the answer of the quiz
      * @param reader	File to parse
      * @return the answer of the quiz
-     * @throws WikiReaderQuestionWithInvalidFormatException
-     * @throws IOException
+     * @throws WikiReaderQuestionWithInvalidFormatException Exeption for invalid format
+     * @throws IOException Exeption for Input
      */
     public String getBlockAnswer(Reader reader) throws WikiReaderQuestionWithInvalidFormatException, IOException {
     	char lastChar = ' ';
@@ -231,7 +234,7 @@ public class WikiReader implements QuizReader {
     /**
      * Determines whether the quiz contains at least one question
      * @param fileContent the quiz file
-     * @return
+     * @return boolean
      */
     public boolean containsLeastOneQuestion(String fileContent) {
     	return fileContent.contains("{");
@@ -239,10 +242,10 @@ public class WikiReader implements QuizReader {
 
 	/**
 	 * Set the QuizContentHandler
-	 * @param quizContentHandler
+	 * @param _quizContentHandler    the Quizz Handler
 	 */
-    public void setQuizContentHandler(QuizContentHandler quizContentHandler) {
-        this.quizContentHandler = quizContentHandler;
+    public void setQuizContentHandler(QuizContentHandler _quizContentHandler) {
+        this.quizContentHandler = _quizContentHandler;
     }    
 
 }
