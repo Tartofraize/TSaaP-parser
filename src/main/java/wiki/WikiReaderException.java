@@ -24,7 +24,7 @@ import quizz.interfaces.QuizReaderException;
 public class WikiReaderException extends QuizReaderException {
 
 	/**
-	 * 
+	 * Content of the exception
 	 * @param message Error message.
 	 */
 	
