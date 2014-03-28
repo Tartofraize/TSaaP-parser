@@ -32,7 +32,7 @@ public class WikiQuizContentHandler implements QuizContentHandler {
 
     private QuizImpl quiz;
     private QuestionImpl currentQuestion;
-    private AnswerBlockImpl currentAnswerBlock;
+   	private AnswerBlockImpl currentAnswerBlock;
     private AnswerImpl currentAnswer;
     private int answerCounter;
 
@@ -149,69 +149,13 @@ public class WikiQuizContentHandler implements QuizContentHandler {
      */
     
     private void postProcess(Question question) {
-    }
+    }   
     
-    /**
-     * 
-     * @return the current question
-     */
-
-	public QuestionImpl getCurrentQuestion() {
+    public QuestionImpl getCurrentQuestion() {
 		return currentQuestion;
 	}
 
-	/**
-	 * 
-	 * @param _currentQuestion the current question
-	 */
-	public void setCurrentQuestion(QuestionImpl _currentQuestion) {
-		this.currentQuestion = _currentQuestion;
+	public void setCurrentQuestion(QuestionImpl currentQuestion) {
+		this.currentQuestion = currentQuestion;
 	}
-	/**
-	 * 
-	 * @return the current answerblock
-	 */
-	public AnswerBlockImpl getCurrentAnswerBlock() {
-		return currentAnswerBlock;
-	}
-
-	/**
-	 * 
-	 * @param _currentAnswerBlock the currrent answerblock
-	 */
-	public void setCurrentAnswerBlock(AnswerBlockImpl _currentAnswerBlock) {
-		this.currentAnswerBlock = _currentAnswerBlock;
-	}
-
-	/**
-	 * 
-	 * @return the current answer
-	 */
-	public AnswerImpl getCurrentAnswer() {
-		return currentAnswer;
-	}
-
-	/**
-	 * 
-	 * @param _currentAnswer the current answer
-	 */
-	public void setCurrentAnswer(AnswerImpl _currentAnswer) {
-		this.currentAnswer = _currentAnswer;
-	}
-
-	/**
-	 * 
-	 * @return the count of answer
-	 */
-	public int getAnswerCounter() {
-		return answerCounter;
-	}
-
-	/**
-	 * 
-	 * @param _answerCounter the real number
-	 */
-	public void setAnswerCounter(int _answerCounter) {
-		this.answerCounter = _answerCounter;
-	}    
 }
