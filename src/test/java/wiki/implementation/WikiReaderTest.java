@@ -28,7 +28,7 @@ public class WikiReaderTest {
 	}
 
 	@Test
-	public void testGetQuestionFromQuizz() throws WikiReaderQuestionWithInvalidFormatException {
+	public void testGetQuestionFromQuizz() throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringReader reader = new StringReader("{QuestionTest}blabla");
 		int currentChar = 0;
 		char start = '{';
@@ -41,7 +41,7 @@ public class WikiReaderTest {
 	}
 	
 	@Test(expected=WikiReaderQuestionWithInvalidFormatException.class)
-	public void testGetQuestionFromQuizzInvalidFormat() throws WikiReaderQuestionWithInvalidFormatException {
+	public void testGetQuestionFromQuizzInvalidFormat() throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringReader reader = new StringReader("QuestionTest}blabla");
 		int currentChar = 0;
 		char start = '{';
@@ -104,7 +104,7 @@ public class WikiReaderTest {
 	}
 
 	@Test
-	public void testGetBlockAnswer() {
+	public void testGetBlockAnswer() throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringReader reader = new StringReader("+ Correct answer.\n- Incorrect answer.\n");
 		String blockAnswer;
 		
