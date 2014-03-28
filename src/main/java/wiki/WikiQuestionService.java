@@ -36,7 +36,7 @@ public class WikiQuestionService {
      * @throws WikiReaderException Exception for invalid format
      * @throws IOException Exeption for Input
      */
-    public Quiz getQuizFromWikiText(String wikiText) throws IOException, WikiReaderException {
+    public Quiz getQuizFromWikiText(String wikiText) throws WikiReaderException {
 		WikiQuizContentHandler handler = new WikiQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);
