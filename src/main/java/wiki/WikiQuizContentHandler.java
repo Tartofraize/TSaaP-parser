@@ -155,7 +155,8 @@ public class WikiQuizContentHandler implements QuizContentHandler {
 		return currentQuestion;
 	}
 
-	public void setCurrentQuestion(QuestionImpl currentQuestion) {
-		this.currentQuestion = currentQuestion;
-	}
+//	public void setCurrentQuestion(QuestionImpl currentQuestion) {
+//		this.currentQuestion = currentQuestion;
+//	}
+    
 }

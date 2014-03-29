@@ -25,14 +25,13 @@ public class WikiQuestionService {
 
     public static final String NO_RESPONSE = "_NO_RESPONSE_";
 
-
     /**
      * Get quiz from its wiki text specification
      *
      * @param wikiText the wiki text
      * @return the result quiz
      */
-    public Quiz getQuizFromWikiText(String wikiText) throws WikiReaderException {
+    public Quiz getQuizFromWikiText(String wikiText) {
 		WikiQuizContentHandler handler = new WikiQuizContentHandler();
         WikiReader quizReader = new WikiReader();
         quizReader.setQuizContentHandler(handler);

@@ -60,4 +60,16 @@ public class WikiQuizContentHandlerTest {
 		wiki.onModifQuestion(nomDeLaQuestion, typeDelaQuestion);
 		assertEquals(wiki.getCurrentQuestion().getQuestionType(), QuestionType.ExclusiveChoice);
 	}
+	
+	@Test
+	public void testOnModifQuestionUnhandledChoice() {
+		final String nomDeLaQuestion = "Nom de la question";
+		char typeDelaQuestion = 'ù';
+		
+		wiki.onStartQuestion();
+		assertEquals(wiki.getCurrentQuestion().getQuestionType(), QuestionType.Undefined);
+
+		wiki.onModifQuestion(nomDeLaQuestion, typeDelaQuestion);
+		assertEquals(wiki.getCurrentQuestion().getQuestionType(), QuestionType.Undefined);
+	}
 }
