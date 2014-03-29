@@ -65,7 +65,11 @@ public class QuizImplTest {
 					        		+ "\n- Distractor."));    	
 	}
 	
-	@Test(expected=QuizReaderException.class)
+	/**
+	 * 
+	 * @throws QuizReaderException Exception for the quizz
+	 */
+	@Test(expected = QuizReaderException.class)
 	public void testCoverageQuizReaderException() throws QuizReaderException {
 		throw new QuizReaderException("Error");
 	}

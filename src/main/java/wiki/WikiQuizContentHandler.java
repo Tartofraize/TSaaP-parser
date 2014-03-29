@@ -21,7 +21,6 @@ import questions.interfaces.Question;
 import questions.interfaces.QuestionType;
 import questions.interfaces.TextBlock;
 import quizz.implementation.QuizImpl;
-import quizz.interfaces.Quiz;
 import quizz.interfaces.QuizContentHandler;
 import reponses.implementation.AnswerBlockImpl;
 import reponses.implementation.AnswerImpl;
@@ -33,7 +32,7 @@ public class WikiQuizContentHandler implements QuizContentHandler {
 
     private QuizImpl quiz;
     private QuestionImpl currentQuestion;
-    private AnswerBlockImpl currentAnswerBlock;
+   	private AnswerBlockImpl currentAnswerBlock;
     private AnswerImpl currentAnswer;
     private int answerCounter;
 
@@ -70,6 +69,8 @@ public class WikiQuizContentHandler implements QuizContentHandler {
     
     /**
      * Receive notification of the beginning of a question
+     * @param nomDeLaQuestion Name of the question
+     * @param typeDelaQuestion Type of the question
      */
     public void onModifQuestion(final String nomDeLaQuestion, char typeDelaQuestion) {
     	currentQuestion.addTextBlock(new TextBlock() {
@@ -111,19 +112,25 @@ public class WikiQuizContentHandler implements QuizContentHandler {
     
     /**
      * Receive notification of the beginning of an answer
+     * @param prefix prefix of the answer
+     * @param nom name of the answer
      */
     public void onStartAnswer(char prefix, String nom) {
         currentAnswer = new AnswerImpl();
         currentAnswer.setIdentifier(String.valueOf(answerCounter++));
         currentAnswer.setTextValue(nom);
         
-        if ('+' ==prefix) {
+        if ('+' == prefix) {
             currentAnswer.setPercentCredit(100f);
         } else {
             currentAnswer.setPercentCredit(0f);
         }        
     }
     
+    /**
+     * Receive notification on modification
+     * @param com the Modification
+     */
     public void onModifAnswer(String com) {
         currentAnswer.setFeedback(com);
     }
@@ -136,38 +143,19 @@ public class WikiQuizContentHandler implements QuizContentHandler {
         currentAnswer = null;
     } 
 
+    /**
+     * 
+     * @param question the question
+     */
+    
     private void postProcess(Question question) {
-    }
-
-	public QuestionImpl getCurrentQuestion() {
+    }   
+    
+    public QuestionImpl getCurrentQuestion() {
 		return currentQuestion;
 	}
 
 	public void setCurrentQuestion(QuestionImpl currentQuestion) {
 		this.currentQuestion = currentQuestion;
 	}
-
-	public AnswerBlockImpl getCurrentAnswerBlock() {
-		return currentAnswerBlock;
-	}
-
-	public void setCurrentAnswerBlock(AnswerBlockImpl currentAnswerBlock) {
-		this.currentAnswerBlock = currentAnswerBlock;
-	}
-
-	public AnswerImpl getCurrentAnswer() {
-		return currentAnswer;
-	}
-
-	public void setCurrentAnswer(AnswerImpl currentAnswer) {
-		this.currentAnswer = currentAnswer;
-	}
-
-	public int getAnswerCounter() {
-		return answerCounter;
-	}
-
-	public void setAnswerCounter(int answerCounter) {
-		this.answerCounter = answerCounter;
-	}    
 }

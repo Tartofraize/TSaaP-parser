@@ -40,10 +40,10 @@ public class AnswerImpl implements Answer {
 
     /**
      * Set te text value of the answer
-     * @param textValue the new text value
+     * @param _textValue the new text value
      */
-    public void setTextValue(String textValue) {
-        this.textValue = textValue;
+    public void setTextValue(String _textValue) {
+        this.textValue = _textValue;
     }
 
     /**
@@ -57,10 +57,10 @@ public class AnswerImpl implements Answer {
 
     /**
      * Set the percent credit of the answer
-     * @param percentCredit the percent credit
+     * @param _percentCredit the percent credit
      */
-    public void setPercentCredit(Float percentCredit) {
-        this.percentCredit = percentCredit;
+    public void setPercentCredit(Float _percentCredit) {
+        this.percentCredit = _percentCredit;
     }
 
     /**
@@ -74,24 +74,24 @@ public class AnswerImpl implements Answer {
 
     /**
      * Set the identifier
-     * @param identifier  the new identifier
+     * @param _identifier  the new identifier
      */
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setIdentifier(String _identifier) {
+        this.identifier = _identifier;
     }
 
     /**
      * Set the feedback
-     * @param feedback
+     * @param _feedback the feedback of an answer
      */
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setFeedback(String _feedback) {
+        this.feedback = _feedback;
     }
 
     /**
      * Get the feedback to present to a student for this answer
      *
-     * @return
+     * @return String feedback
      */
     public String getFeedBack() {
         return feedback;

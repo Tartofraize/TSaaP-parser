@@ -1,13 +1,11 @@
 package reponses.implementation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-
-import reponses.interfaces.Answer;
 
 public class AnswerBlockImplTest {
 
