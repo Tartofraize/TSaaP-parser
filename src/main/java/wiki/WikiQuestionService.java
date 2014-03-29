@@ -16,13 +16,7 @@
 
 package wiki;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.net.URL;
-
-import questions.interfaces.Question;
 import quizz.interfaces.Quiz;
-import reponses.implementation.AnswerImpl;
 
 /**
  * @author Heiva

@@ -219,7 +219,7 @@ public class WikiReader implements QuizReader {
      */
     public void splitBlockAnswer(String blockAnswer) {
     	String[] result = blockAnswer.split("\n");
-    	String comment = null;
+    	String comment = "";
     	
     	for (int i = 0; i < result.length; i++) {
     		if (result[i].contains("+") || result[i].contains("-")) {
@@ -228,7 +228,7 @@ public class WikiReader implements QuizReader {
     				quizContentHandler.onEndAnswer();
     			}
     			quizContentHandler.onStartAnswer(result[i].charAt(0), result[i].substring(2, result[i].length() - 1));
-    			comment = null;
+    			comment = "";
     		} else if (result[i].contains("||")) { 
     			comment = result[i].substring(3, result[i].length() - 1);
     		} else {
