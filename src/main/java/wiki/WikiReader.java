@@ -111,8 +111,7 @@ public class WikiReader implements QuizReader {
 	 * @param start 		Start character
 	 * @param finish 		End character
 	 * @return the question of the quiz
-	 * @throws WikiReaderQuestionWithInvalidFormatException
-	 * @throws IOException
+	 * @throws WikiReaderQuestionWithInvalidFormatException throw invalid format quiz
 	 */
 	public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException {
 		StringBuilder questionToSplit = new StringBuilder();
@@ -129,10 +128,7 @@ public class WikiReader implements QuizReader {
 			while (((currentChar = reader.read()) != -1) && (currentChar != finish)) {
 				questionToSplit.append((char) currentChar);
 
-			} 
-			//			if (currentChar == -1) {			
-			//				throw new WikiReaderQuestionWithInvalidFormatException();
-			//			}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -200,7 +196,7 @@ public class WikiReader implements QuizReader {
 
 		int currentChar;
     	try {
-			while (((currentChar = reader.read()) != -1) && (currentChar != '\n' || lastChar != '\n'))  {
+			while (((currentChar = reader.read()) != -1))  {
 				if (currentChar == '\n') {
 					lastChar = '\n';
 				} else {

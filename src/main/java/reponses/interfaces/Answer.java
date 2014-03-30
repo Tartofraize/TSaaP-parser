@@ -44,7 +44,7 @@ public interface Answer {
 
     /**
      * Get the feedback to present to a student for this answer
-     * @return feedBack
+     * @return the feedBack
      */
     public String getFeedBack();
 }

@@ -2,6 +2,7 @@ package wiki.implementation;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.io.StringReader;
 
 import org.junit.After;
@@ -35,7 +36,7 @@ public class WikiReaderTest {
 	}
 	
 	@Test
-	public void testReadFileNotFoundException() {
+	public void testReadFileNotFound() {
 		String fileName = "NotFound";
 		wikiReader.readFile(fileName);
 	}
@@ -68,8 +69,20 @@ public class WikiReaderTest {
 		
 		question = wikiReader.getQuestionFromQuizz(reader, currentChar, start, end);
 		assertTrue(question.equals("QuestionTest"));
-
 	}
+	
+	@Test
+	public void testGetQuestionFromQuizzWithNoEndChar() throws WikiReaderQuestionWithInvalidFormatException {
+		StringReader reader = new StringReader("{QuestionTest");
+		int currentChar = 0;
+		char start = '{';
+		char end = '}';
+		String question;
+		
+		question = wikiReader.getQuestionFromQuizz(reader, currentChar, start, end);
+		assertTrue(question.equals("QuestionTest"));
+	}
+	
 	
 	@Test(expected=WikiReaderQuestionWithInvalidFormatException.class)
 	public void testGetQuestionFromQuizzInvalidFormat() throws WikiReaderQuestionWithInvalidFormatException {
