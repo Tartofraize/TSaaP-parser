@@ -17,7 +17,6 @@
 package wiki;
 
 import questions.implementation.QuestionImpl;
-import questions.interfaces.Question;
 import questions.interfaces.QuestionType;
 import questions.interfaces.TextBlock;
 import quizz.implementation.QuizImpl;
@@ -89,7 +88,6 @@ public class WikiQuizContentHandler implements QuizContentHandler {
      * Receive notification of the end of a question
      */
     public void onEndQuestion() {
-        postProcess(currentQuestion);
         quiz.addQuestion(currentQuestion);
         currentQuestion = null;
     }
@@ -142,21 +140,13 @@ public class WikiQuizContentHandler implements QuizContentHandler {
         currentAnswerBlock.addAnswer(currentAnswer);
         currentAnswer = null;
     } 
-
+    
     /**
-     * 
-     * @param question the question
+     * Get the current question
+     * @return the current question
      */
-    
-    private void postProcess(Question question) {
-    }   
-    
     public QuestionImpl getCurrentQuestion() {
 		return currentQuestion;
 	}
-
-//	public void setCurrentQuestion(QuestionImpl currentQuestion) {
-//		this.currentQuestion = currentQuestion;
-//	}
     
 }

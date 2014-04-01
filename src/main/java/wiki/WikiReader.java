@@ -53,7 +53,6 @@ public class WikiReader implements QuizReader {
 	 * Parse the file content
 	 * @param reader the file content to parse
 	 * @throws WikiReaderException 
-	 * @throws IOException 
 	 */
 	public void parse(Reader reader) throws WikiReaderException {
 		quizContentHandler.onStartQuiz();
@@ -167,6 +166,7 @@ public class WikiReader implements QuizReader {
 	 * Checks whether the type of question is consistent with the number of responses
 	 * @param blockAnswer The set of responses
 	 * @param questionType The type of the question
+	 * @throws WikiReaderException invalid number of answers
 	 */
 	public void checkNumberOfAnwsers(String blockAnswer, char questionType) throws WikiReaderException {
 		int nbPlus = 0;
@@ -191,18 +191,11 @@ public class WikiReader implements QuizReader {
      * @throws IOException
 	 */
     public String getBlockAnswer(Reader reader) {
-		char lastChar = ' ';
 		StringBuilder blockAnswer = new StringBuilder();
 
 		int currentChar;
     	try {
-			while (((currentChar = reader.read()) != -1))  {
-				if (currentChar == '\n') {
-					lastChar = '\n';
-				} else {
-					lastChar = ' ';
-				}
-				
+			while (((currentChar = reader.read()) != -1))  {				
 				blockAnswer.append((char) currentChar);
 			}
 		} catch (IOException e) {
@@ -249,10 +242,10 @@ public class WikiReader implements QuizReader {
 
 	/**
 	 * Set the QuizContentHandler
-	 * @param _quizContentHandler    the Quizz Handler
+	 * @param _quizContentHandler    the Quiz Handler
 	 */
-    public void setQuizContentHandler(QuizContentHandler quizContentHandler) {
-        this.quizContentHandler = quizContentHandler;
+    public void setQuizContentHandler(QuizContentHandler _quizContentHandler) {
+        this.quizContentHandler = _quizContentHandler;
 	}    
 
 	/**
