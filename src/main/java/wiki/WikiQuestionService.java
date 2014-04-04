@@ -19,7 +19,7 @@ package wiki;
 import quizz.interfaces.Quiz;
 
 /**
- * @author Heiva
+ * @author franck Silvestre
  */
 public class WikiQuestionService {
 
