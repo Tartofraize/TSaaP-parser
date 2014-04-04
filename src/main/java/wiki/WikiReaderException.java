@@ -27,7 +27,6 @@ public class WikiReaderException extends QuizReaderException {
 	 * Content of the exception
 	 * @param message Error message.
 	 */
-	
     public WikiReaderException(String message) {
         super(message);
     }
