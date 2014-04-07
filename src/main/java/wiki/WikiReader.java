@@ -14,7 +14,7 @@ import quizz.interfaces.QuizContentHandler;
 import quizz.interfaces.QuizReader;
 
 /**
- * @author franck Silvestre
+ * @author laurine Marmisse
  */
 public class WikiReader implements QuizReader {
 
@@ -53,8 +53,9 @@ public class WikiReader implements QuizReader {
 	 * Parse the file content
 	 * @param reader the file content to parse
 	 * @throws WikiReaderException 
+	 * @throws IOException 
 	 */
-	public void parse(Reader reader) throws WikiReaderException {
+	public void parse(Reader reader) throws WikiReaderException, IOException {
 		quizContentHandler.onStartQuiz();
 
 		int currentChar;
@@ -65,37 +66,33 @@ public class WikiReader implements QuizReader {
 		char questionType;
 		String questionName;
 
-		try {
-			while ((currentChar = reader.read()) != -1) {
-				System.out.println("debDUneBoucle");
+		while ((currentChar = reader.read()) != -1) {
+			System.out.println("debDUneBoucle");
 
-				questionToSplit = getQuestionFromQuizz(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
+			questionToSplit = getQuestionFromQuizz(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
 
-				quizContentHandler.onStartQuestion();
+			quizContentHandler.onStartQuestion();
 
-				questionName = getQuestionName(questionToSplit);
-				questionType = getQuestionType(questionToSplit);
+			questionName = getQuestionName(questionToSplit);
+			questionType = getQuestionType(questionToSplit);
 
-				quizContentHandler.onModifQuestion(questionName, questionType);
+			quizContentHandler.onModifQuestion(questionName, questionType);
 
-				currentChar = reader.read();
+			currentChar = reader.read();
 
-				blockAnswer = getBlockAnswer(reader);
+			blockAnswer = getBlockAnswer(reader);
 
-				checkNumberOfAnwsers(blockAnswer, questionType);
+			checkNumberOfAnwsers(blockAnswer, questionType);
 
-				quizContentHandler.onStartAnswerBlock();
+			quizContentHandler.onStartAnswerBlock();
 
-				splitBlockAnswer(blockAnswer);       	
+			splitBlockAnswer(blockAnswer);       	
 
-				quizContentHandler.onEndAnswerBlock();
+			quizContentHandler.onEndAnswerBlock();
 
-				quizContentHandler.onEndQuestion();
+			quizContentHandler.onEndQuestion();
 
-				System.out.println("finDUneBoucle");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("finDUneBoucle");
 		}
 
 		quizContentHandler.onEndQuiz();
@@ -111,25 +108,22 @@ public class WikiReader implements QuizReader {
 	 * @param finish 		End character
 	 * @return the question of the quiz
 	 * @throws WikiReaderQuestionWithInvalidFormatException throw invalid format quiz
+	 * @throws IOException 
 	 */
-	public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException {
+	public String getQuestionFromQuizz(Reader reader, int currentChar, char start, char finish) throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringBuilder questionToSplit = new StringBuilder();
 
-		try {
-			if (currentChar != '{') {
-				while (((currentChar = reader.read()) != -1) && (currentChar != start)) {
-					continue;
-				}			
-				if (currentChar == -1) {
-					throw new WikiReaderQuestionWithInvalidFormatException();
-				}
+		if (currentChar != '{') {
+			while (((currentChar = reader.read()) != -1) && (currentChar != start)) {
+				continue;
+			}			
+			if (currentChar == -1) {
+				throw new WikiReaderQuestionWithInvalidFormatException();
 			}
-			while (((currentChar = reader.read()) != -1) && (currentChar != finish)) {
-				questionToSplit.append((char) currentChar);
+		}
+		while (((currentChar = reader.read()) != -1) && (currentChar != finish)) {
+			questionToSplit.append((char) currentChar);
 
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return questionToSplit.toString();
 	}
@@ -187,19 +181,14 @@ public class WikiReader implements QuizReader {
 	 * Get the answer of the quiz
 	 * @param reader	File to parse
 	 * @return the answer of the quiz
-     * @throws WikiReaderQuestionWithInvalidFormatException
-     * @throws IOException
+	 * @throws IOException 
 	 */
-    public String getBlockAnswer(Reader reader) {
+    public String getBlockAnswer(Reader reader) throws IOException {
 		StringBuilder blockAnswer = new StringBuilder();
 
 		int currentChar;
-    	try {
-			while (((currentChar = reader.read()) != -1))  {				
-				blockAnswer.append((char) currentChar);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		while (((currentChar = reader.read()) != -1))  {				
+			blockAnswer.append((char) currentChar);
 		}
 		return blockAnswer.toString();
 	}

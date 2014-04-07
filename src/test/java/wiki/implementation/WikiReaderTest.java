@@ -52,7 +52,7 @@ public class WikiReaderTest {
 	}
 
 	@Test
-	public void testParse() throws WikiReaderException{
+	public void testParse() throws WikiReaderException, IOException {
 		StringReader reader = new StringReader("<quiz display=\"simple\">\n{Question\nsur plusieurs\nlignes\n|type=\"[]\"}\n"
 				+ "+ reponse 1.|| com 1 \nsur 2 lignes\n- reponse 2.\n+ reponse 3.\n"
 				+ "|| commentaires\n- reponse 4.\n|| com 333333\n</quiz>");
@@ -60,7 +60,7 @@ public class WikiReaderTest {
 	}
 	
 	@Test
-	public void testGetQuestionFromQuizz() throws WikiReaderQuestionWithInvalidFormatException {
+	public void testGetQuestionFromQuizz() throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringReader reader = new StringReader("{QuestionTest}blabla");
 		int currentChar = 0;
 		char start = '{';
@@ -72,7 +72,7 @@ public class WikiReaderTest {
 	}
 	
 	@Test
-	public void testGetQuestionFromQuizzWithNoEndChar() throws WikiReaderQuestionWithInvalidFormatException {
+	public void testGetQuestionFromQuizzWithNoEndChar() throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringReader reader = new StringReader("{QuestionTest");
 		int currentChar = 0;
 		char start = '{';
@@ -85,7 +85,7 @@ public class WikiReaderTest {
 	
 	
 	@Test(expected=WikiReaderQuestionWithInvalidFormatException.class)
-	public void testGetQuestionFromQuizzInvalidFormat() throws WikiReaderQuestionWithInvalidFormatException {
+	public void testGetQuestionFromQuizzInvalidFormat() throws WikiReaderQuestionWithInvalidFormatException, IOException {
 		StringReader reader = new StringReader("QuestionTest}blabla");
 		int currentChar = 0;
 		char start = '{';
@@ -148,7 +148,7 @@ public class WikiReaderTest {
 	}
 
 	@Test
-	public void testGetBlockAnswer() {
+	public void testGetBlockAnswer() throws IOException {
 		StringReader reader = new StringReader("+ Correct answer.\n- Incorrect answer.\n");
 		String blockAnswer;
 		
