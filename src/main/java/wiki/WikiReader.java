@@ -67,8 +67,6 @@ public class WikiReader implements QuizReader {
 		String questionName;
 
 		while ((currentChar = reader.read()) != -1) {
-			System.out.println("debDUneBoucle");
-
 			questionToSplit = getQuestionFromQuizz(reader, currentChar, leftBracketCharacter, rightBracketCharacter);
 
 			quizContentHandler.onStartQuestion();
@@ -91,12 +89,9 @@ public class WikiReader implements QuizReader {
 			quizContentHandler.onEndAnswerBlock();
 
 			quizContentHandler.onEndQuestion();
-
-			System.out.println("finDUneBoucle");
 		}
 
-		quizContentHandler.onEndQuiz();
-		System.out.println("\n--------Methode du graphe----------\n");
+		System.out.println("--------Methode du graphe----------\n");
 		quizContentHandler.getQuiz().getGraphe();
 	}
 

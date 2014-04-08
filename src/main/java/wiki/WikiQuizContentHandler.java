@@ -49,14 +49,6 @@ public class WikiQuizContentHandler implements QuizContentHandler {
      */
     public void onStartQuiz() {
         quiz = new QuizImpl();
-        System.out.println("Debut du Quizz");
-    }
-
-    /**
-     * Receive notification of the end of a quiz
-     */
-    public void onEndQuiz() {
-    	System.out.println("Fin reception quizz");
     }
 
     /**

@@ -13,11 +13,6 @@ public interface QuizContentHandler {
 	public void onStartQuiz();
 
 	/**
-	 * Receive notification of the end of a quiz
-	 */
-	public void onEndQuiz();
-
-	/**
 	 * Receive notification of the beginning of a question
 	 */
 	public void onStartQuestion();
